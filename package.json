@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "coffee-script": "~1.6.2",
-    "mocha": "~1.9.0"
+    "mocha": "~1.9.0",
+    "setimmediate": "~1.0.1"
   },
   "optionalDependencies": {},
   "engines": {

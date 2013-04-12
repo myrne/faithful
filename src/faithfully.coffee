@@ -11,7 +11,7 @@ ffl.eachSeries = ffl.forEachSeries = (values, func) ->
   # http://blog.jcoglan.com/2013/03/30/ ...
   # callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/
   # iterator = (currentPromise, value) -> currentPromise.then -> func value
-  # return values.reduce iterator, ffl.unit() # I don't understand this code yet
+  # return values.reduce iterator, ffl.return() # I don't understand this code yet
   i = 0
   promise = new RSVP.Promise
   iterate = ->
@@ -35,7 +35,7 @@ ffl.mapSeries = (values, func) ->
   
 ffl.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
-  promise.resolve values
+  promise.resolve value
   promise
   
 ffl.reduce = (values, func) ->
