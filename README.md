@@ -1,8 +1,44 @@
 # faithfully
 
-Like async, but employing promises.
+Like [Async](https://github.com/caolan/async), but employing promises.
 
 ## Usage
+
+Faithfully mimics the [Async](https://github.com/caolan/async) API, with three important differences:
+
+* the functions don't have a callback argument
+* the functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js))
+* the iterator is not passed a callback argument. Instead, an iterator is expected to return a promise.
+
+Currently, Faithfully only implements `each`, `eachSeries`, `map`, and `mapSeries`.
+
+### faithfully.each
+
+```coffee
+faithfully = require "faithfully"
+faithfully.each(inputs, iterator)
+  .then ->
+    console.log "Everything has executed."
+  .then null, (err)
+    console.error error
+```
+
+`faithfully.eachSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator has resolved.
+
+`each` and `eachSeries` are also available as `forEach` and `forEachSeries`, respectively.
+
+### faithfully.map
+
+```coffee
+faithfully = require "faithfully"
+faithfully.map(inputs, iterator)
+  .then (outputs) ->
+    console.log outputs
+  .then null, (err)
+    console.error error
+```
+
+`faithfully.mapSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator has resolved.
 
 ## Credits
 
