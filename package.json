@@ -11,7 +11,9 @@
     "url": "git://github.com/meryn/faithfully.git"
   },
   "private": false,
-  "dependencies": {},
+  "dependencies": {
+    "rsvp": "~1.2.0"
+  },
   "devDependencies": {
     "coffee-script": "~1.6.2",
     "mocha": "~1.9.0"
