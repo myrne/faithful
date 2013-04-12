@@ -19,7 +19,7 @@ faithfully = require "faithfully"
 faithfully.each(inputs, iterator)
   .then ->
     console.log "Everything has executed."
-  .then null, (err) ->
+  .then null, (error) ->
     console.error error
 ```
 
@@ -34,7 +34,7 @@ faithfully = require "faithfully"
 faithfully.map(inputs, iterator)
   .then (outputs) ->
     console.log outputs
-  .then null, (err) ->
+  .then null, (error) ->
     console.error error
 ```
 
