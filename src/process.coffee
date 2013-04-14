@@ -13,8 +13,8 @@ module.exports = process = (values, options) ->
         return promise.reject err
       try
         localPromise
-          .then (output) ->
-            options.handleOutput? output
+          .then (result) ->
+            options.handleResult? result
             iterate()
           .then null, (err) -> promise.reject err
       catch error

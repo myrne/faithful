@@ -26,10 +26,10 @@ faithful.map = (values, iterator) ->
     faithful.throw error
 
 faithful.mapSeries = (inputs, iterator) ->
-  outputs = []
+  results = []
   process inputs,
-    handleOutput: (output) -> outputs.push output
-    getFinalValue: -> outputs
+    handleResult: (result) -> results.push result
+    getFinalValue: -> results
     callNext: (i) -> iterator inputs[i]
   
 faithful.return = (value) -> # returns a promise which resolves to value
@@ -44,6 +44,6 @@ faithful.throw = (error) -> # returns a promise which rejects with error
 
 faithful.reduce = (values, reduction, iterator) ->
   process values,
-    handleOutput: (output) -> reduction = output
+    handleResult: (result) -> reduction = result
     getFinalValue: -> reduction
     callNext: (i) -> iterator reduction, values[i]
