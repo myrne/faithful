@@ -1,14 +1,14 @@
 {
-  "name": "faithfully",
+  "name": "faithful",
   "description": "Like async, but employing promises.",
   "keywords": [],
   "version": "0.0.1",
   "author": "Meryn Stol <merynstol@gmail.com>",
-  "homepage": "https://github.com/meryn/faithfully",
-  "bugs": "https://github.com/meryn/faithfully/issues",
+  "homepage": "https://github.com/meryn/faithful",
+  "bugs": "https://github.com/meryn/faithful/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/meryn/faithfully.git"
+    "url": "git://github.com/meryn/faithful.git"
   },
   "private": false,
   "dependencies": {
@@ -24,7 +24,7 @@
     "node": "0.10.x",
     "npm": "1.2.x"
   },
-  "main": "lib/faithfully.js",
+  "main": "lib/faithful.js",
   "scripts": {
     "prepublish": "npm test",
     "pretest": "make build",

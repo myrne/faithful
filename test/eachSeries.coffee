@@ -6,8 +6,8 @@ RSVP = require "rsvp"
 testSeries = require "./shared/series"
 testAny = require "./shared/any"
 
-faithfully = require "../"
+faithful = require "../"
 
-describe "faithfully.eachSeries", ->
-  testSeries faithfully.eachSeries, it
-  testAny faithfully.eachSeries, it
+describe "faithful.eachSeries", ->
+  testSeries faithful.eachSeries, it
+  testAny faithful.eachSeries, it

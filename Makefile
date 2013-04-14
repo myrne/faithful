@@ -10,13 +10,13 @@ test:
 
 jumpstart:
 	npm install
-	curl -u 'meryn' https://api.github.com/user/repos -d '{"name":"faithfully", "description":"Like async, but employing promises.","private":false}'
+	curl -u 'meryn' https://api.github.com/user/repos -d '{"name":"faithful", "description":"Like async, but employing promises.","private":false}'
 	mkdir -p src
-	touch src/faithfully.coffee
+	touch src/faithful.coffee
 	mkdir -p test
-	touch test/faithfully.coffee
+	touch test/faithful.coffee
 	git init
-	git remote add origin git@github.com:meryn/faithfully
+	git remote add origin git@github.com:meryn/faithful
 	git add .
 	git commit -m "jumpstart commit."
 	git push -u origin master
