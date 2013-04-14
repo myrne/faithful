@@ -1,4 +1,5 @@
 RSVP = require "rsvp"
+process = require "./process"
   
 module.exports = faithful = {}
 
@@ -15,23 +16,10 @@ faithful.eachSeries = faithful.forEachSeries = (values, func) ->
   # callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/
   # iterator = (currentPromise, value) -> currentPromise.then -> func value
   # return values.reduce iterator, faithful.return() # I don't understand this code yet
-  i = 0
-  promise = new RSVP.Promise
-  iterate = ->
-    if i >= values.length
-      promise.resolve() 
-    else
-      try 
-        localPromise = func(values[i])
-      catch err
-        return promise.reject err
-      try
-        localPromise.then (-> iterate()), ((err) -> promise.reject err)
-      catch error
-        promise.reject error
-      i++
-  iterate()
-  promise
+  process values,
+    handleOutput: (output) ->
+    getFinalOutput: -> undefined
+    callNext: (i) -> func values[i]
 
 faithful.map = (values, func) ->
   try
@@ -40,28 +28,11 @@ faithful.map = (values, func) ->
     faithful.throw error
 
 faithful.mapSeries = (inputs, func) ->
-  i = 0
-  promise = new RSVP.Promise
   outputs = []
-  iterate = ->
-    if i >= inputs.length
-      promise.resolve outputs 
-    else
-      try 
-        localPromise = func(inputs[i])
-      catch err
-        return promise.reject err
-      try
-        localPromise
-          .then (output) ->
-            outputs.push output # this works because individual promises resolve in order
-            iterate()
-          .then null, (err) -> promise.reject err
-      catch error
-        promise.reject error
-      i++
-  iterate()
-  promise
+  process inputs,
+    handleOutput: (output) -> outputs.push output
+    getFinalOutput: -> outputs
+    callNext: (i) -> func inputs[i]
   
 faithful.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
@@ -72,26 +43,9 @@ faithful.throw = (error) -> # returns a promise which rejects with error
   promise = new RSVP.Promise
   promise.reject error
   promise
-  
+
 faithful.reduce = (values, reduction, func) ->
-  i = 0
-  promise = new RSVP.Promise
-  iterate = ->
-    if i >= values.length
-      promise.resolve reduction
-    else
-      try 
-        localPromise = func reduction, values[i]
-      catch err
-        return promise.reject err
-      try
-        localPromise
-          .then (output) ->
-            reduction = output
-            iterate()
-          .then null, (err) -> promise.reject err
-      catch error
-        promise.reject error
-      i++
-  iterate()
-  promise
+  process values,
+    handleOutput: (output) -> reduction = output
+    getFinalOutput: -> reduction
+    callNext: (i) -> func reduction, values[i]
