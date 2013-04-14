@@ -59,7 +59,7 @@ faithful.reduce([1,2,3,4], 1, iterator)
     console.error error
 ```
 
-By necessity, `faithful.reduce` does it's processing serially. The value of the reduction after a particular step `i` must be known before the next step can be executed. When possible, it's advisable to first get an array values in a parallel fashion (for example by employing `faithful.map`) and then calling `reduce` on the resulting array.
+By necessity, `faithful.reduce` does its processing serially. The value of the reduction after a particular step `i` must be known before the next step can be executed. When possible, it's advisable to first get an array values in a parallel fashion (for example by employing `faithful.map`) and then calling `reduce` on the resulting array.
 
 ## Credits
 
