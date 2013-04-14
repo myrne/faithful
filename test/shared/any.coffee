@@ -5,6 +5,13 @@ timeout = 100
 length = 20
 
 module.exports = testAny = (subjectFn, it) ->
+  it "throws an error when no iterator is passed", ->
+    try
+      subjectFn(inputs)
+    catch error
+      return true
+    throw new Error "No error was thrown."
+  
   it "fails gracefully when fn throws an error", (next) ->
     fn = (arg) -> throw new Error "Random exception"
     inputs = (i for i in [0...length].reverse())
