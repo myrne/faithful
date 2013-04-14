@@ -17,6 +17,18 @@ module.exports = testAny = (subjectFn, it) ->
       .then null, (err) ->
         next err
         
+  it "fails gracefully when fn does not return an object with 'then' method", (next) ->
+    fn = (arg) -> {someMethodNotBeingThen: -> true}
+    inputs = (i for i in [0...length].reverse())
+    subjectFn(inputs, fn)
+      .then ->
+        next new Error "function should not have succeeded."
+      .then null, (err) ->
+        assert.equal err.toString(), "TypeError: Object #<Object> has no method 'then'"
+        next null
+      .then null, (err) ->
+        next err
+    
   it "calls fn with every value in the array", (next) ->
     argumentsUsed = (false for i in [0...10])
     inputs = (i for i in [0...10])
