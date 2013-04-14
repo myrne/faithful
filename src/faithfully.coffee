@@ -36,8 +36,26 @@ ffl.map = (values, func) ->
   catch error
     ffl.throw error
 
-ffl.mapSeries = (values, func) ->
-  RSVP.all (func value for value in values)
+ffl.mapSeries = (inputs, func) ->
+  i = 0
+  promise = new RSVP.Promise
+  outputs = []
+  iterate = ->
+    if i >= inputs.length
+      promise.resolve outputs 
+    else
+      try 
+        localPromise = func(inputs[i])
+      catch err
+        return promise.reject err
+      localPromise
+        .then (output) ->
+          outputs.push output # this works because individual promises resolve in order
+          iterate()
+        .then null, (err) -> promise.reject err
+      i++
+  iterate()
+  promise
   
 ffl.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
