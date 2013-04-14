@@ -17,8 +17,6 @@ faithful.eachSeries = faithful.forEachSeries = (values, iterator) ->
   # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
   # return values.reduce iterator, faithful.return() # I don't understand this code yet
   process values,
-    handleOutput: (output) ->
-    getFinalOutput: -> undefined
     callNext: (i) -> iterator values[i]
 
 faithful.map = (values, iterator) ->
