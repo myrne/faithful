@@ -4,7 +4,10 @@ module.exports = ffl = {}
 
 ffl.each = ffl.forEach = (values, func) -> 
   # this effectively works like "map", but it will do for now
-  RSVP.all (func value for value in values)
+  try
+    eachPromise = RSVP.all (func value for value in values)
+  catch error
+    ffl.throw error
   
 ffl.eachSeries = ffl.forEachSeries = (values, func) ->
   # Algorithm from
@@ -28,7 +31,10 @@ ffl.eachSeries = ffl.forEachSeries = (values, func) ->
   promise
 
 ffl.map = (values, func) ->
-  RSVP.all (func value for value in values)
+  try
+    mapPromise = RSVP.all (func value for value in values)
+  catch error
+    ffl.throw error
 
 ffl.mapSeries = (values, func) ->
   RSVP.all (func value for value in values)
@@ -36,6 +42,11 @@ ffl.mapSeries = (values, func) ->
 ffl.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
   promise.resolve value
+  promise
+
+ffl.throw = (error) -> # returns a promise which rejects with error
+  promise = new RSVP.Promise
+  promise.reject error
   promise
   
 ffl.reduce = (values, func) ->
