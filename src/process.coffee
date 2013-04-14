@@ -5,7 +5,7 @@ module.exports = process = (values, options) ->
   promise = new RSVP.Promise
   iterate = ->
     if i >= values.length
-      promise.resolve options.getFinalOutput?()
+      promise.resolve options.getFinalValue?()
     else
       try 
         localPromise = options.callNext i

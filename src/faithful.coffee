@@ -29,7 +29,7 @@ faithful.mapSeries = (inputs, iterator) ->
   outputs = []
   process inputs,
     handleOutput: (output) -> outputs.push output
-    getFinalOutput: -> outputs
+    getFinalValue: -> outputs
     callNext: (i) -> iterator inputs[i]
   
 faithful.return = (value) -> # returns a promise which resolves to value
@@ -45,5 +45,5 @@ faithful.throw = (error) -> # returns a promise which rejects with error
 faithful.reduce = (values, reduction, iterator) ->
   process values,
     handleOutput: (output) -> reduction = output
-    getFinalOutput: -> reduction
+    getFinalValue: -> reduction
     callNext: (i) -> iterator reduction, values[i]
