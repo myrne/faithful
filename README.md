@@ -15,7 +15,6 @@ Currently, faithful only implements `each`, `eachSeries`, `map`, and `mapSeries`
 ### faithful.each
 
 ```coffee
-faithful = require "faithful"
 faithful.each(inputs, iterator)
   .then ->
     console.log "Everything has executed."
@@ -30,7 +29,6 @@ faithful.each(inputs, iterator)
 ### faithful.map
 
 ```coffee
-faithful = require "faithful"
 faithful.map(inputs, iterator)
   .then (outputs) ->
     console.log outputs
