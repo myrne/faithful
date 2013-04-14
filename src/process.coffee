@@ -8,7 +8,7 @@ module.exports = process = (values, options) ->
       promise.resolve options.getFinalValue?()
     else
       try 
-        localPromise = options.callNext i
+        localPromise = options.iterator values[i]
       catch err
         return promise.reject err
       try

@@ -17,7 +17,7 @@ faithful.eachSeries = faithful.forEachSeries = (values, iterator) ->
   # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
   # return values.reduce iterator, faithful.return() # I don't understand this code yet
   process values,
-    callNext: (i) -> iterator values[i]
+    iterator: iterator
 
 faithful.map = (values, iterator) ->
   try
@@ -30,7 +30,7 @@ faithful.mapSeries = (inputs, iterator) ->
   process inputs,
     handleResult: (result) -> results.push result
     getFinalValue: -> results
-    callNext: (i) -> iterator inputs[i]
+    iterator: iterator
   
 faithful.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
@@ -46,12 +46,12 @@ faithful.reduce = (values, reduction, iterator) ->
   process values,
     handleResult: (result) -> reduction = result
     getFinalValue: -> reduction
-    callNext: (i) -> iterator reduction, values[i]
+    iterator: (value) -> iterator reduction, value
 
 faithful.detectSeries = (values, iterator) ->
   found = false
   process values,
     handleResult: (result) -> found = true if result
     getFinalValue: -> found
-    callNext: (i) -> iterator values[i]
+    iterator: iterator
     stopEarly: -> found
