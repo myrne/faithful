@@ -1,5 +1,6 @@
 build:
 	mkdir -p lib
+	rm -rf lib/*
 	node_modules/.bin/coffee --compile -m --output lib/ src/
 
 watch:
