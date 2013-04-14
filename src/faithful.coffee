@@ -1,20 +1,20 @@
 RSVP = require "rsvp"
   
-module.exports = ffl = {}
+module.exports = faithful = {}
 
-ffl.each = ffl.forEach = (values, func) -> 
+faithful.each = faithful.forEach = (values, func) -> 
   # this effectively works like "map", but it will do for now
   try
     eachPromise = RSVP.all (func value for value in values)
   catch error
-    ffl.throw error
+    faithful.throw error
   
-ffl.eachSeries = ffl.forEachSeries = (values, func) ->
+faithful.eachSeries = faithful.forEachSeries = (values, func) ->
   # Algorithm from
   # http://blog.jcoglan.com/2013/03/30/ ...
   # callbacks-are-imperative-promises-are-functional-nodes-biggest-missed-opportunity/
   # iterator = (currentPromise, value) -> currentPromise.then -> func value
-  # return values.reduce iterator, ffl.return() # I don't understand this code yet
+  # return values.reduce iterator, faithful.return() # I don't understand this code yet
   i = 0
   promise = new RSVP.Promise
   iterate = ->
@@ -30,13 +30,13 @@ ffl.eachSeries = ffl.forEachSeries = (values, func) ->
   iterate()
   promise
 
-ffl.map = (values, func) ->
+faithful.map = (values, func) ->
   try
     mapPromise = RSVP.all (func value for value in values)
   catch error
-    ffl.throw error
+    faithful.throw error
 
-ffl.mapSeries = (inputs, func) ->
+faithful.mapSeries = (inputs, func) ->
   i = 0
   promise = new RSVP.Promise
   outputs = []
@@ -57,15 +57,15 @@ ffl.mapSeries = (inputs, func) ->
   iterate()
   promise
   
-ffl.return = (value) -> # returns a promise which resolves to value
+faithful.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
   promise.resolve value
   promise
 
-ffl.throw = (error) -> # returns a promise which rejects with error
+faithful.throw = (error) -> # returns a promise which rejects with error
   promise = new RSVP.Promise
   promise.reject error
   promise
   
-ffl.reduce = (values, func) ->
+faithful.reduce = (values, func) ->
   
