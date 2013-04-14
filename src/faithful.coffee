@@ -73,5 +73,25 @@ faithful.throw = (error) -> # returns a promise which rejects with error
   promise.reject error
   promise
   
-faithful.reduce = (values, func) ->
-  
+faithful.reduce = (values, reduction, func) ->
+  i = 0
+  promise = new RSVP.Promise
+  iterate = ->
+    if i >= values.length
+      promise.resolve reduction
+    else
+      try 
+        localPromise = func reduction, values[i]
+      catch err
+        return promise.reject err
+      try
+        localPromise
+          .then (output) ->
+            reduction = output
+            iterate()
+          .then null, (err) -> promise.reject err
+      catch error
+        promise.reject error
+      i++
+  iterate()
+  promise
