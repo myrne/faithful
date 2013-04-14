@@ -10,7 +10,7 @@ Faithful mimics the [Async](https://github.com/caolan/async) API, with three imp
 * the functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js))
 * the iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the function will fail.
 
-Currently, faithful only implements `each`, `eachSeries`, `map`, and `mapSeries`.
+Currently, Faithful only implements `each`, `eachSeries`, `map`, `mapSeries`, and `reduce`.
 
 ### faithful.each
 
@@ -37,6 +37,29 @@ faithful.map(inputs, iterator)
 ```
 
 `faithful.mapSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator has resolved.
+
+### faithful.reduce
+
+The iterator for `reduce` works a little differently than the regular iterators. In line with `Array.reduce` and Async.reduce, the iterator takes the current reduction as its first argument, and the current value to be processed as the second. The returned promise must resolve with new value for the reduction.
+
+On top of that, the reduce function takes an extra argument (in the middle). This specifies the initial value of the reduction.
+
+The example below is a pretty involved way of computing the factorial of 4 (i.e. `4 * 3 * 2 * 1`). Note that in this code, it's actually computed as `1 * 1 * 2 * 3 * 4`. The first `1` is the initial value passed. 
+
+```coffee
+iterator = (reduction, value) ->
+  promise = new RSVP.Promise
+  setImmediate ->
+    promise.resolve reduction * value
+  promise
+faithful.reduce([1,2,3,4], 1, iterator)
+  .then (reduction) ->
+    console.log reduction # 4! == 24
+  .then null, (error) ->
+    console.error error
+```
+
+By necessity, `faithful.reduce` does it's processing serially. The value of the reduction after a particular step `i` must be known before the next step can be executed. When possible, it's advisable to first get an array values in a parallel fashion (for example by employing `faithful.map`) and then calling `reduce` on the resulting array.
 
 ## Credits
 
