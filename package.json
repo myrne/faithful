@@ -2,7 +2,7 @@
   "name": "faithful",
   "description": "Like async, but employing promises.",
   "keywords": [],
-  "version": "0.0.1",
+  "version": "0.1.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "homepage": "https://github.com/meryn/faithful",
   "bugs": "https://github.com/meryn/faithful/issues",
