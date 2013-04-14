@@ -25,7 +25,10 @@ faithful.eachSeries = faithful.forEachSeries = (values, func) ->
         localPromise = func(values[i])
       catch err
         return promise.reject err
-      localPromise.then (-> iterate()), ((err) -> promise.reject err)
+      try
+        localPromise.then (-> iterate()), ((err) -> promise.reject err)
+      catch error
+        promise.reject error
       i++
   iterate()
   promise
@@ -48,11 +51,14 @@ faithful.mapSeries = (inputs, func) ->
         localPromise = func(inputs[i])
       catch err
         return promise.reject err
-      localPromise
-        .then (output) ->
-          outputs.push output # this works because individual promises resolve in order
-          iterate()
-        .then null, (err) -> promise.reject err
+      try
+        localPromise
+          .then (output) ->
+            outputs.push output # this works because individual promises resolve in order
+            iterate()
+          .then null, (err) -> promise.reject err
+      catch error
+        promise.reject error
       i++
   iterate()
   promise
