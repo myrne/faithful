@@ -1,7 +1,16 @@
 {
   "name": "faithful",
-  "description": "Like async, but employing promises.",
-  "keywords": [],
+  "description": "Like Async, but employing promises.",
+  "keywords": [
+    "promises",
+    "async",
+    "map",
+    "mapSeries",
+    "each",
+    "eachSeries",
+    "forEach",
+    "forEachSeries"
+  ],
   "version": "0.1.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "homepage": "https://github.com/meryn/faithful",
