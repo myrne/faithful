@@ -4,7 +4,7 @@ module.exports = process = (values, options) ->
   i = 0
   promise = new RSVP.Promise
   iterate = ->
-    if i >= values.length
+    if (i >= values.length) or options.stopEarly?()
       promise.resolve options.getFinalValue?()
     else
       try 
