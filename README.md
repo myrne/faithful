@@ -1,4 +1,4 @@
-# Faithful
+# Faithful [![Build Status](https://travis-ci.org/meryn/faithful.png?branch=master)](https://travis-ci.org/meryn/faithful)
 
 Like [Async](https://github.com/caolan/async), but employing promises.
 
