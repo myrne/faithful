@@ -47,3 +47,11 @@ faithful.reduce = (values, reduction, iterator) ->
     handleResult: (result) -> reduction = result
     getFinalValue: -> reduction
     callNext: (i) -> iterator reduction, values[i]
+
+faithful.detectSeries = (values, iterator) ->
+  found = false
+  process values,
+    handleResult: (result) -> found = true if result
+    getFinalValue: -> found
+    callNext: (i) -> iterator values[i]
+    stopEarly: -> found
