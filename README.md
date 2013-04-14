@@ -8,7 +8,7 @@ Faithful mimics the [Async](https://github.com/caolan/async) API, with three imp
 
 * the functions don't have a callback argument
 * the functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js))
-* the iterator is not passed a callback argument. Instead, an iterator is expected to return a promise.
+* the iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the function will fail.
 
 Currently, faithful only implements `each`, `eachSeries`, `map`, and `mapSeries`.
 
