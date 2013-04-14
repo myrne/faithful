@@ -10,7 +10,7 @@ module.exports = testAny = (subjectFn, it) ->
     inputs = (i for i in [0...length].reverse())
     subjectFn(inputs, fn)
       .then ->
-        next new Error "eachSeries should not have succeeded."
+        next new Error "function should not have succeeded."
       .then null, (err) ->
         assert.equal err.toString(), "Error: Random exception"
         next null
@@ -46,7 +46,7 @@ module.exports = testAny = (subjectFn, it) ->
         next null
       .then null, (err) ->
         console.log err
-        next new Error "The eachSeries should not have failed."
+        next new Error "Function should not have failed."
         
 delayRandomly = (maxTimeout, fn) ->
   delay (Math.round(Math.random() * maxTimeout)), fn
