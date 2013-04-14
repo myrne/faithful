@@ -5,7 +5,7 @@ timeout = 100
 length = 20
 
 module.exports = testSeries = (subjectFn, it) ->
-  it "stops calling fn when previous call of fn fails", (next) ->
+  it "stops calling fn when a call of fn fails", (next) ->
     argsUsed = (false for i in [0...length])
     inputs = (i for i in [0...length])
     callOrder = []
