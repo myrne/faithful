@@ -61,7 +61,7 @@ faithful.reduce([1,2,3,4], 1, iterator)
 
 By necessity, `faithful.reduce` does its processing serially. The value of the reduction after a particular step `i` must be known before the next step can be executed. When possible, it's advisable to first get an array of values in a parallel fashion (for example by employing `faithful.map`) and then calling `reduce` on the resulting array.
 
-## faithful.detect
+### faithful.detect
 
 ```coffee
 faithful.detect(inputs, iterator)
@@ -77,6 +77,55 @@ faithful.detect(inputs, iterator)
 `faithful.detect` gives as result the first input value for which the promises returned by the iterator resolved to a truthy value (i.e. something that evalates to `true` in context of an if statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
 
 Because `faithful.detect` calls the iterator for each value right after each other, the matching input does will not necessarily be the first to among the matching values. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
+
+## Under the hood
+
+All functions of Faithful are powered by two functions that do most of the work: `Faitful.each` and `Faithful.eachSeries`.
+
+Both `faithful.each` and `faithful.eachSeries` take the following arguments: `values`, `iterator` and an optional `options` object. This options object allows you to configure the iteration process. Look at it as a configurable loop. All options are optional.
+
+## faithful.reduce - implementation
+
+To get a sense of how you can build something quickly which is not implemented by Faithful yet, take a look at how the `Faithful.reduce` is implemented.
+
+```coffee
+faithful.reduce = (values, reduction, iterator) ->
+  faithful.eachSeries values, ((value) -> iterator reduction, value),
+    handleResult: (result) -> reduction = result
+    getFinalValue: -> reduction
+```
+
+do something with results resulting from the iterator, as well as specifying a final value (which the promise will returned by `each` or `eachSeries` will eventually resolve with).
+
+The iterator passed to `map` must be slightly adapter before being passed to `eachSeries`, because `eachSeries` calls the iterator with only the a value from the values array, while the iterator passed to `map` also takes a `reduction` argument (as it's first argument). 
+
+`handleResult` is called for every promise that resolves. In this case, the result is assigned to the local `reduction` variable (note its listes in the `reduce` function arguments).
+
+When every promise has resolved, the promise that `eachSeries` returns gets resolved with the value returned by `getFinalValue`.
+
+## faithful.detect - implementation
+
+```coffee
+faithful.detect = (values, iterator) ->
+  found = false
+  foundValue = undefined
+  faithful.each values, iterator,
+    handleResult: (result, index) -> 
+      return unless result # did iterator match?
+      foundValue = values[index] # look up the value that made the iterator match
+      found = true # remember that we found something
+    getFinalValue: -> foundValue # return the found value
+    stopEarly: -> found # causes loop to stop when we found something
+```
+
+With faithful.detect, the iterator gets passed on unchanged to faithful.each. After all, it just takes a single input argument. 
+
+There are two other things of note:
+
+* `handleResult` takes a second argument `index`, which is the array index for the value that resulted in the current result. Here, the index is used to look up the original input value for the index, and set that as `foundValue`.
+* when you provide a `stopEarly` function, you can cause the processing to stop before it would otherwise has. Here, we're done when we've found a value. Noe that in case of `each`, the iterator will already have been called with all the values in the array, so only processing of results will stop. In case of `eachSeries`, it will prevent any further calls to `iterator`.
+
+Note that the specifics of the options object may well change in the future. However, I think it's too useful not to share.
 
 ## Credits
 
