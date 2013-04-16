@@ -1,7 +1,8 @@
 RSVP = require "rsvp"
-process = require "./process"
   
 module.exports = faithful = {}
+faithful.eachSeries = require "./eachSeries"
+
 
 faithful.each = faithful.forEach = (values, iterator) -> 
   # this effectively works like "map", but it will do for now
@@ -10,13 +11,13 @@ faithful.each = faithful.forEach = (values, iterator) ->
   catch error
     faithful.throw error
   
-faithful.eachSeries = faithful.forEachSeries = (values, iterator) ->
-  # Algorithm from
-  # http://blog.jcoglan.com/2013/03/30/ ...
-  # callbacks-are-imperative-promises-are-iteratortional-nodes-biggest-missed-opportunity/
-  # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
-  # return values.reduce iterator, faithful.return() # I don't understand this code yet
-  process values, iterator
+# faithful.eachSeries  = faithful.forEachSeries = (values, iterator) ->
+#   # Algorithm from
+#   # http://blog.jcoglan.com/2013/03/30/ ...
+#   # callbacks-are-imperative-promises-are-iteratortional-nodes-biggest-missed-opportunity/
+#   # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
+#   # return values.reduce iterator, faithful.return() # I don't understand this code yet
+#   faithful.eachSeries values, iterator
 
 faithful.map = (values, iterator) ->
   try
@@ -26,7 +27,7 @@ faithful.map = (values, iterator) ->
 
 faithful.mapSeries = (inputs, iterator) ->
   results = []
-  process inputs, iterator,
+  faithful.eachSeries inputs, iterator,
     handleResult: (result) -> results.push result
     getFinalValue: -> results
   
@@ -41,13 +42,13 @@ faithful.throw = (error) -> # returns a promise which rejects with error
   promise
 
 faithful.reduce = (values, reduction, iterator) ->
-  process values, ((value) -> iterator reduction, value),
+  faithful.eachSeries values, ((value) -> iterator reduction, value),
     handleResult: (result) -> reduction = result
     getFinalValue: -> reduction
 
 faithful.detectSeries = (values, iterator) ->
   found = false
-  process values, iterator,
+  faithful.eachSeries values, iterator,
     handleResult: (result) -> found = true if result
     getFinalValue: -> found
     stopEarly: -> found
