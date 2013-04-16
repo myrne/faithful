@@ -12,7 +12,9 @@
     "forEachSeries",
     "reduce",
     "detect",
-    "detectSeries"
+    "detectSeries",
+    "filter",
+    "filterSeries"
   ],
   "version": "0.3.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
