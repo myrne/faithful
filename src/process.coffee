@@ -1,6 +1,6 @@
 RSVP = require "rsvp"
 
-module.exports = process = (values, options) ->
+module.exports = process = (values, iterator, options ={}) ->
   i = 0
   promise = new RSVP.Promise
   iterate = ->
@@ -8,7 +8,7 @@ module.exports = process = (values, options) ->
       promise.resolve options.getFinalValue?()
     else
       try 
-        localPromise = options.iterator values[i]
+        localPromise = iterator values[i]
       catch err
         return promise.reject err
       try

@@ -16,8 +16,7 @@ faithful.eachSeries = faithful.forEachSeries = (values, iterator) ->
   # callbacks-are-imperative-promises-are-iteratortional-nodes-biggest-missed-opportunity/
   # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
   # return values.reduce iterator, faithful.return() # I don't understand this code yet
-  process values,
-    iterator: iterator
+  process values, iterator
 
 faithful.map = (values, iterator) ->
   try
@@ -27,10 +26,9 @@ faithful.map = (values, iterator) ->
 
 faithful.mapSeries = (inputs, iterator) ->
   results = []
-  process inputs,
+  process inputs, iterator,
     handleResult: (result) -> results.push result
     getFinalValue: -> results
-    iterator: iterator
   
 faithful.return = (value) -> # returns a promise which resolves to value
   promise = new RSVP.Promise
@@ -43,15 +41,13 @@ faithful.throw = (error) -> # returns a promise which rejects with error
   promise
 
 faithful.reduce = (values, reduction, iterator) ->
-  process values,
+  process values, ((value) -> iterator reduction, value),
     handleResult: (result) -> reduction = result
     getFinalValue: -> reduction
-    iterator: (value) -> iterator reduction, value
 
 faithful.detectSeries = (values, iterator) ->
   found = false
-  process values,
+  process values, iterator,
     handleResult: (result) -> found = true if result
     getFinalValue: -> found
-    iterator: iterator
     stopEarly: -> found
