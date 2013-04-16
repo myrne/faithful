@@ -37,3 +37,10 @@ faithful.detectSeries = (values, iterator) ->
     handleResult: (result) -> found = true if result
     getFinalValue: -> found
     stopEarly: -> found
+    
+faithful.detect = (values, iterator) ->
+  found = false
+  faithful.each values, iterator,
+    handleResult: (result) -> found = true if result
+    getFinalValue: -> found
+    stopEarly: -> found
