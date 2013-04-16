@@ -10,9 +10,7 @@ module.exports = each = (values, iterator, options = {}) ->
     return bigPromise
   stopped = false
   numRemaining = promises.length
-  console.log numRemaining
   resolver = (index) ->
-    # return null unless options.handleResult?
     return (value) ->
       return if stopped
       try
