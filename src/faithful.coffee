@@ -33,14 +33,22 @@ faithful.reduce = (values, reduction, iterator) ->
 
 faithful.detectSeries = (values, iterator) ->
   found = false
+  foundValue = undefined
   faithful.eachSeries values, iterator,
-    handleResult: (result) -> found = true if result
-    getFinalValue: -> found
+    handleResult: (result, i) -> 
+      return unless result
+      foundValue = values[i]
+      found = true
+    getFinalValue: -> foundValue
     stopEarly: -> found
     
 faithful.detect = (values, iterator) ->
   found = false
+  foundValue = undefined
   faithful.each values, iterator,
-    handleResult: (result) -> found = true if result
-    getFinalValue: -> found
+    handleResult: (result, i) -> 
+      return unless result
+      foundValue = values[i]
+      found = true 
+    getFinalValue: -> foundValue
     stopEarly: -> found
