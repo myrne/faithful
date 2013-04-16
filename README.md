@@ -2,7 +2,7 @@
 
 Like [Async](https://github.com/caolan/async), but employing promises.
 
-Currently, Faithful only implements `each`, `eachSeries`, `map`, `mapSeries`, and `reduce`.
+Currently, Faithful implements `each`, `eachSeries`, `map`, `mapSeries`, `reduce`, `detect`, `detectSeries`.
 
 ## Usage
 
@@ -60,6 +60,23 @@ faithful.reduce([1,2,3,4], 1, iterator)
 ```
 
 By necessity, `faithful.reduce` does its processing serially. The value of the reduction after a particular step `i` must be known before the next step can be executed. When possible, it's advisable to first get an array of values in a parallel fashion (for example by employing `faithful.map`) and then calling `reduce` on the resulting array.
+
+## faithful.detect
+
+```coffee
+faithful.detect(inputs, iterator)
+  .then (firstMatchingInput) ->
+    if firstMatchingInput?
+      console.log firstMatchingInput
+    else
+      console.log "No input matched the criteria."
+  .then null, (error) ->
+    console.error error
+```
+
+`faithful.detect` gives as result the first input value for which the promises returned by the iterator resolved to a truthy value (i.e. something that evalates to `true` in context of an if statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
+
+Because `faithful.detect` calls the iterator for each value right after each other, the matching input does will not necessarily be the first to among the matching values. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
 
 ## Credits
 
