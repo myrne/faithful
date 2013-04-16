@@ -10,7 +10,9 @@
     "eachSeries",
     "forEach",
     "forEachSeries",
-    "reduce"
+    "reduce",
+    "detect",
+    "detectSeries"
   ],
   "version": "0.3.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
