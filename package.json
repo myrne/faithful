@@ -12,7 +12,7 @@
     "forEachSeries",
     "reduce"
   ],
-  "version": "0.2.1",
+  "version": "0.3.0",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "homepage": "https://github.com/meryn/faithful",
   "bugs": "https://github.com/meryn/faithful/issues",
