@@ -21,4 +21,10 @@ module.exports = process = (values, iterator, options ={}) ->
         promise.reject error
       i++
   iterate()
-  promise  
+  promise
+  
+  # Algorithm from
+  # http://blog.jcoglan.com/2013/03/30/ ...
+  # callbacks-are-imperative-promises-are-funcional-nodes-biggest-missed-opportunity/
+  # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
+  # return values.reduce iterator, faithful.return() # I don't understand this code yet

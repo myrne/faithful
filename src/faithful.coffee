@@ -10,14 +10,6 @@ faithful.each = faithful.forEach = (values, iterator) ->
     eachPromise = RSVP.all (iterator value for value in values)
   catch error
     faithful.throw error
-  
-# faithful.eachSeries  = faithful.forEachSeries = (values, iterator) ->
-#   # Algorithm from
-#   # http://blog.jcoglan.com/2013/03/30/ ...
-#   # callbacks-are-imperative-promises-are-iteratortional-nodes-biggest-missed-opportunity/
-#   # iterator = (currentPromise, value) -> currentPromise.then -> iterator value
-#   # return values.reduce iterator, faithful.return() # I don't understand this code yet
-#   faithful.eachSeries values, iterator
 
 faithful.map = (values, iterator) ->
   try
