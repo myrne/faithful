@@ -56,7 +56,7 @@ module.exports = testAny = (subjectFn, it) ->
       promise
     subjectFn(inputs, fn)
       .then ->
-        assert.ok argumentsUsed[input], "Argument #{input} was used." for input in inputs
+        assert.ok argumentsUsed[input], "Argument #{input} was not used." for input in inputs
         next null
       .then null, (err) -> next err
 
