@@ -1,8 +1,10 @@
 RSVP = require "rsvp"
 
 module.exports = each = (values, iterator, options = {}) ->
-  return faithful.return [] unless values.length
   bigPromise = new RSVP.Promise
+  unless values.length
+    bigPromise.resolve []
+    return bigPromise
   try
     promises = (iterator value for value in values)
   catch error
