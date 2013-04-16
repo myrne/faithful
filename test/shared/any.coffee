@@ -9,6 +9,7 @@ module.exports = testAny = (subjectFn, it) ->
     try
       subjectFn(inputs)
     catch error
+      assert.equal error.toString(), "ReferenceError: inputs is not defined"
       return true
     throw new Error "No error was thrown."
   
