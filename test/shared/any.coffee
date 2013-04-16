@@ -5,6 +5,14 @@ timeout = 100
 length = 20
 
 module.exports = testAny = (subjectFn, it) ->
+  it "immediately resolves if an empty array is passed", (next) ->
+    promise = subjectFn [], (abc) -> true
+    promise
+      .then (result) ->
+        next null
+      .then null, (err) ->
+        next err
+  
   it "throws an error when no iterator is passed", ->
     try
       subjectFn(inputs)
