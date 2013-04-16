@@ -2,7 +2,18 @@
 
 Like [Async](https://github.com/caolan/async), but employing promises.
 
-Currently, Faithful implements `each`, `eachSeries`, `map`, `mapSeries`, `reduce`, `detect`, `detectSeries`, `filter`, `filterSeries`.
+### Collection functions
+
+* `each`, `eachSeries`
+* `map`, `mapSeries`
+* `reduce`
+* `detect`, `detectSeries` 
+* `filter`, `filterSeries`
+
+### Utility functions
+
+* `log`
+* `dir`
 
 ## Usage
 
@@ -78,9 +89,18 @@ faithful.detect(inputs, iterator)
 
 Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have resolved -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
 
+### faithful.log
+
+`faithful.log` logs the resolution value of the promise using `console.log`, and the failure value with `console.error` otherwise.
+
+### faithtful.dir
+
+`faithful.log` logs the resolution value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
+
+
 ## Under the hood
 
-All functions of Faithful are powered by two functions that do most of the work: `faithful.each` and `faithful.eachSeries`.
+All collection functions of Faithful are powered by two functions that do most of the work: `faithful.each` and `faithful.eachSeries`.
 
 Both `faithful.each` and `faithful.eachSeries` take the following arguments: `values`, `iterator` and an optional `options` object. This options object allows you to configure the iteration process. Look at it as a configurable loop. All options are optional.
 
