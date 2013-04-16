@@ -2,7 +2,7 @@
 
 Like [Async](https://github.com/caolan/async), but employing promises.
 
-Currently, Faithful implements `each`, `eachSeries`, `map`, `mapSeries`, `reduce`, `detect`, `detectSeries`.
+Currently, Faithful implements `each`, `eachSeries`, `map`, `mapSeries`, `reduce`, `detect`, `detectSeries`, `filter`, `filterSeries`.
 
 ## Usage
 
@@ -84,7 +84,7 @@ All functions of Faithful are powered by two functions that do most of the work:
 
 Both `faithful.each` and `faithful.eachSeries` take the following arguments: `values`, `iterator` and an optional `options` object. This options object allows you to configure the iteration process. Look at it as a configurable loop. All options are optional.
 
-## faithful.reduce - implementation
+### Implementation of faithful.reduce
 
 To get a sense of how you can build something quickly which is not implemented by Faithful yet, take a look at how the `Faithful.reduce` is implemented.
 
@@ -103,7 +103,7 @@ The iterator passed to `map` must be slightly adapter before being passed to `ea
 
 When every promise has resolved, the promise that `eachSeries` returns gets resolved with the value returned by `getFinalValue`.
 
-## faithful.detect - implementation
+### Implementation of faithful.detect
 
 ```coffee
 faithful.detect = (values, iterator) ->
