@@ -68,3 +68,17 @@ faithful.filterSeries = (values, iterator) ->
       return unless result
       matchingValues.push values[i]
     getFinalValue: -> matchingValues
+    
+faithful.log = (promise) ->
+  promise
+    .then (value) -> 
+      console.log value
+    .then null, (err) -> 
+      console.error err
+
+faithful.dir = (promise) ->
+  promise
+    .then (value) -> 
+      console.log value
+    .then null, (err) -> 
+      console.error err
