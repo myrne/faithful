@@ -74,13 +74,13 @@ faithful.detect(inputs, iterator)
     console.error error
 ```
 
-`faithful.detect` gives as result the first input value for which the promises returned by the iterator resolved to a truthy value (i.e. something that evalates to `true` in context of an if statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
+`faithful.detect` gives as result the first input value for which the promises returned by the iterator resolved to a truthy value (i.e. something that evalates to `true` in context of an if-statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
 
-Because `faithful.detect` calls the iterator for each value right after each other, the matching input does will not necessarily be the first to among the matching values. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
+Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have resolved -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
 
 ## Under the hood
 
-All functions of Faithful are powered by two functions that do most of the work: `Faitful.each` and `Faithful.eachSeries`.
+All functions of Faithful are powered by two functions that do most of the work: `faithful.each` and `faithful.eachSeries`.
 
 Both `faithful.each` and `faithful.eachSeries` take the following arguments: `values`, `iterator` and an optional `options` object. This options object allows you to configure the iteration process. Look at it as a configurable loop. All options are optional.
 
@@ -95,13 +95,11 @@ faithful.reduce = (values, reduction, iterator) ->
     getFinalValue: -> reduction
 ```
 
-do something with results resulting from the iterator, as well as specifying a final value (which the promise will returned by `each` or `eachSeries` will eventually resolve with).
+#### Things of note
 
-The iterator passed to `map` must be slightly adapter before being passed to `eachSeries`, because `eachSeries` calls the iterator with only the a value from the values array, while the iterator passed to `map` also takes a `reduction` argument (as it's first argument). 
-
-`handleResult` is called for every promise that resolves. In this case, the result is assigned to the local `reduction` variable (note its listes in the `reduce` function arguments).
-
-When every promise has resolved, the promise that `eachSeries` returns gets resolved with the value returned by `getFinalValue`.
+* The iterator passed to `map` must be slightly adapter before being passed to `eachSeries`, because `eachSeries` calls the iterator with only the a value from the values array, while the iterator passed to `map` also takes a `reduction` argument (as it's first argument). 
+* `handleResult` is called for every promise that resolves. In this case, the result is assigned to the local `reduction` variable (note its listes in the `reduce` function arguments).
+* When every promise has resolved, the promise that `eachSeries` returns gets resolved with the value returned by `getFinalValue`.
 
 ### Implementation of faithful.detect
 
@@ -111,20 +109,22 @@ faithful.detect = (values, iterator) ->
   foundValue = undefined
   faithful.each values, iterator,
     handleResult: (result, index) -> 
-      return unless result # did iterator match?
+      return unless result # did iterator find a match?
       foundValue = values[index] # look up the value that made the iterator match
       found = true # remember that we found something
-    getFinalValue: -> foundValue # return the found value
-    stopEarly: -> found # causes loop to stop when we found something
+    getFinalValue: -> foundValue # let promise resolve with the found value
+    stopEarly: -> found # stop the processing when we found something
 ```
 
-There are three things of note:
+#### Things of note
 
 * In contrast to the implementation of `faithful.map`, here the iterator gets passed on unchanged to `faithful.each`.
 * `handleResult` takes a second argument `index`, which is the array index for the value that resulted in the current result. Here, the index is used to look up the original input value for the index, and set that as `foundValue`.
 * When you provide a `stopEarly` function, you can cause the processing to stop before it would otherwise have. Here, we're done as soon as we've found a value. Noe that in case of `each`, the iterator will already have been called with all the values in the array, so only processing of results will stop. In case of `eachSeries`, it will prevent any further calls to `iterator`.
 
-Note that the specifics of the options object may well change in the future. However, I think it's too useful not to share.
+### Use with caution
+
+The specifics of the `options` object may well change in the future. However, I think it's too useful not to share.
 
 ## Credits
 
