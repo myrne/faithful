@@ -2,20 +2,13 @@ RSVP = require "rsvp"
   
 module.exports = faithful = {}
 faithful.eachSeries = require "./eachSeries"
-
-
-faithful.each = faithful.forEach = (values, iterator) -> 
-  # this effectively works like "map", but it will do for now
-  try
-    eachPromise = RSVP.all (iterator value for value in values)
-  catch error
-    faithful.throw error
+faithful.each = require "./each"
 
 faithful.map = (values, iterator) ->
-  try
-    mapPromise = RSVP.all (iterator value for value in values)
-  catch error
-    faithful.throw error
+  results = []
+  faithful.each values, iterator,
+    handleResult: (value, i) -> results[i] = value
+    getFinalValue: -> results
 
 faithful.mapSeries = (inputs, iterator) ->
   results = []

@@ -45,9 +45,11 @@ module.exports = testAny = (subjectFn, it) ->
         argumentsUsed[value] = true
         promise.resolve()
       promise
-    subjectFn(inputs, fn).then ->
-      assert.ok argumentsUsed[input], "Argument #{input} was used." for input in inputs
-      next null
+    subjectFn(inputs, fn)
+      .then ->
+        assert.ok argumentsUsed[input], "Argument #{input} was used." for input in inputs
+        next null
+      .then null, (err) -> next err
 
   it "calls fn with arguments in original order", (next) ->
     argsUsed = (false for i in [0...length])
