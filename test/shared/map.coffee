@@ -1,21 +1,16 @@
 assert = require "assert"
-RSVP = require "rsvp"
 
 timeout = 100
 length = 20
-argumentsUsed = (false for i in [0...10])
-
+faithful = require "../../"
 
 module.exports = testMap = (subjectFn, it) ->
   inputs = (i for i in [0...10])
   expectedOutputs = (i*2 for i in inputs)
   it "returns promise that resolves to correct array", (next) ->
     fn = (value) ->
-      promise = new RSVP.Promise
-      setImmediate ->
-        argumentsUsed[value] = true
-        promise.resolve value * 2
-      promise
+      faithful.makePromise (resolve) ->
+        setImmediate -> resolve value * 2
     subjectFn(inputs, fn).then (outputs) ->
       assert.equal outputs[i], expectedOutputs[i] for i in [0..10]
       next null

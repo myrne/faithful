@@ -1,5 +1,5 @@
 assert = require "assert"
-RSVP = require "rsvp"
+faithful = require "../../"
 
 timeout = 100
 length = 20
@@ -11,10 +11,8 @@ module.exports = testMap = (subjectFn, it) ->
     numbers = [4,6,7,8,9,10,12,14,15,16,17,18,19,20]
     primes = (number for number in numbers when isPrime number)
     detectPrime = (number) ->
-      promise = new RSVP.Promise
-      setImmediate ->
-        promise.resolve isPrime number
-      promise
+      faithful.makePromise (resolve) ->
+        setImmediate -> resolve isPrime number
     subjectFn(numbers, detectPrime)
       .then (primes) ->
         assert.ok -1 is primes.indexOf 12

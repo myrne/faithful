@@ -1,5 +1,5 @@
 assert = require "assert"
-RSVP = require "rsvp"
+faithful = require "../../"
 
 timeout = 100
 length = 20
@@ -49,11 +49,10 @@ module.exports = testAny = (subjectFn, it) ->
     argumentsUsed = (false for i in [0...10])
     inputs = (i for i in [0...10])
     fn = (value) ->
-      promise = new RSVP.Promise
-      setImmediate ->
-        argumentsUsed[value] = true
-        promise.resolve()
-      promise
+      faithful.makePromise (resolve) ->
+        setImmediate ->
+          argumentsUsed[value] = true
+          resolve()
     subjectFn(inputs, fn)
       .then ->
         assert.ok argumentsUsed[input], "Argument #{input} was not used." for input in inputs
@@ -65,12 +64,11 @@ module.exports = testAny = (subjectFn, it) ->
     inputs = (i for i in [0...length])
     callOrder = []
     fn = (arg) ->
-      promise = new RSVP.Promise
       assert.ok !argsUsed[i], "Arg #{i} has been used before arg #{arg}." for i in [arg...length]
       argsUsed[arg] = true
       callOrder.push arg
-      delayRandomly timeout, -> promise.resolve()
-      promise
+      faithful.makePromise (resolve) ->
+        delayRandomly timeout, -> resolve()
     subjectFn(inputs, fn)
       .then ->
         next null

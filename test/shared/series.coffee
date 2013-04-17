@@ -1,8 +1,9 @@
 assert = require "assert"
-RSVP = require "rsvp"
 
 timeout = 100
 length = 20
+
+faithful = require "../../"
 
 module.exports = testSeries = (subjectFn, it) ->
   it "stops calling fn when a call of fn fails", (next) ->
@@ -11,14 +12,13 @@ module.exports = testSeries = (subjectFn, it) ->
     callOrder = []
     expectedOutputs = (i*2 for i in inputs)
     fn = (value) ->
-      promise = new RSVP.Promise
       argsUsed[value] = true
       callOrder.push value
-      if value is 5
-        delayRandomly timeout, -> promise.reject new Error "Random Error."
-      else
-        delayRandomly timeout, -> promise.resolve()
-      promise
+      faithful.makePromise (resolve, reject) ->
+        if value is 5
+          delayRandomly timeout, -> reject new Error "Random Error."
+        else
+          delayRandomly timeout, -> resolve()
     subjectFn(inputs, fn)
       .then ->
         next new Error "eachSeries should have failed, but hasn't."
