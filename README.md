@@ -12,6 +12,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Utility functions
 
+* `return` - returns a resolved promise with specified value
+* `throw` - returns a failed promise with specified error
 * `log` - logs the resolved value of a promise with `console.log`
 * `dir` - logs the resolved value of a promise with `console.dir`
 
@@ -91,12 +93,21 @@ Because `faithful.detect` starts with calling the iterator once for each value i
 
 ### faithful.log
 
-`faithful.log` logs the resolution value of the promise using `console.log`, and the failure value with `console.error` otherwise.
+`faithful.log` logs the resolved value of the promise using `console.log`, and the failure value with `console.error` otherwise.
+
+```coffee
+faithful.log faithful.return "abc"
+# shown on console: "abc"
+```
 
 ### faithtful.dir
 
-`faithful.log` logs the resolution value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
+`faithful.log` logs the resolved value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
 
+```coffee
+faithful.log faithful.return abc:123
+# shown on console: "{ abc: 123 }"
+```
 
 ## Under the hood
 
