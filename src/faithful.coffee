@@ -1,8 +1,7 @@
-RSVP = require "rsvp"
-  
 module.exports = faithful = {}
 faithful.eachSeries = require "./eachSeries"
 faithful.each = require "./each"
+faithful.makePromise = require "./makePromise"
 
 faithful.map = (values, iterator) ->
   results = []
@@ -17,14 +16,10 @@ faithful.mapSeries = (inputs, iterator) ->
     getFinalValue: -> results
   
 faithful.return = (value) -> # returns a promise which resolves to value
-  promise = new RSVP.Promise
-  promise.resolve value
-  promise
+  faithful.makePromise (resolve) -> resolve value
 
 faithful.throw = (error) -> # returns a promise which rejects with error
-  promise = new RSVP.Promise
-  promise.reject error
-  promise
+  faithful.makePromise (resolve, reject) -> reject value
 
 faithful.reduce = (values, reduction, iterator) ->
   faithful.eachSeries values, ((value) -> iterator reduction, value),
