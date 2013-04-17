@@ -12,15 +12,15 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Utility functions
 
-* `log`
-* `dir`
+* `log` - logs the resolved value of a promise with `console.log`
+* `dir` - logs the resolved value of a promise with `console.dir`
 
 ## Usage
 
 Faithful mimics the [Async](https://github.com/caolan/async) API, with three important differences:
 
-* The functions don't have a callback argument
-* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js))
+* The functions don't have a callback argument.
+* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js)).
 * The iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
 
 ### faithful.each
@@ -53,7 +53,7 @@ faithful.map(inputs, iterator)
 
 The iterator for `reduce` works a little differently than the regular iterators. In line with `Array.reduce` and `Async.reduce`, the iterator takes the current reduction as its first argument, and the current input value to be processed as the second. The returned promise must resolve with the new value for the reduction.
 
-On top of that, the reduce function takes an extra argument (in the middle). This specifies the initial value of the reduction.
+On top of that, `faithful.reduce` takes an extra argument (in the middle). This specifies the initial value of the reduction.
 
 The example below is a pretty involved way of computing the factorial of 4 (i.e. `4 * 3 * 2 * 1`). Note that in this code, it's actually computed as `1 * 1 * 2 * 3 * 4`. The first `1` is the initial value passed. 
 
@@ -138,7 +138,7 @@ faithful.detect = (values, iterator) ->
 
 #### Things of note
 
-* In contrast to the implementation of `faithful.map`, here the iterator gets passed on unchanged to `faithful.each`.
+* In contrast to the implementation of `faithful.reduce` shown above, here the iterator gets passed on unchanged to `faithful.each`.
 * `handleResult` takes a second argument `index`, which is the array index for the value that resulted in the current result. Here, the index is used to look up the original input value for the index, and set that as `foundValue`.
 * When you provide a `stopEarly` function, you can cause the processing to stop before it would otherwise have. Here, we're done as soon as we've found a value. Noe that in case of `each`, the iterator will already have been called with all the values in the array, so only processing of results will stop. In case of `eachSeries`, it will prevent any further calls to `iterator`.
 
