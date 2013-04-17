@@ -102,10 +102,10 @@ faithful.log faithful.return "abc"
 
 ### faithtful.dir
 
-`faithful.log` logs the resolved value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
+`faithful.dir` logs the resolved value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
 
 ```coffee
-faithful.log faithful.return abc:123
+faithful.dir faithful.return abc:123
 # shown on console: "{ abc: 123 }"
 ```
 
