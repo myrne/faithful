@@ -1,4 +1,5 @@
 module.exports = faithful = {}
+faithful.adapt = require "./adapt"
 faithful.eachSeries = require "./eachSeries"
 faithful.each = require "./each"
 faithful.makePromise = require "./makePromise"
