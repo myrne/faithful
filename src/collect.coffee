@@ -1,6 +1,7 @@
-faithful.each = require "./each"
-faithful.return = require("./utiltities").return
-faithful.throw = require("./utiltities").throw
+faithful =
+  each: require "./each"
+  return: require("./utilities").return
+  throw: require("./utilities").throw
 
 module.exports = collect = (value) ->
   switch getTypeOf value
@@ -14,15 +15,15 @@ module.exports = collect = (value) ->
       
 collectValues = (array) ->
   results = []
-  faithful.each array, ensurePromise
+  faithful.each array, ensurePromise,
     handleResult: (value, i) -> results[i] = value
     getFinalValue: -> results
 
 collectProperties = (object) ->
   names = Object.keys object
-  values = (value for value of object)
+  values = (value for name, value of object)
   newProperties = {}
-  faithful.each values, ensurePromise
+  faithful.each values, ensurePromise,
     handleResult: (value, i) -> newProperties[names[i]] = value
     getFinalValue: -> newProperties
 
