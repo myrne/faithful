@@ -3,7 +3,8 @@ faithful.adapt = require "./adapt"
 faithful.eachSeries = require "./eachSeries"
 faithful.each = require "./each"
 faithful.makePromise = require "./makePromise"
-faithful[name] = fn for name, fn in require "./utilities"
+faithful[name] = fn for name, fn of require "./utilities"
+faithful.collect = require "./collect"
 
 faithful.map = (values, iterator) ->
   results = []
