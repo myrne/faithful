@@ -1,3 +1,4 @@
+makePromise = require "./makePromise"
 module.exports = faithful = {}
     
 faithful.log = (promise) ->
@@ -15,7 +16,7 @@ faithful.dir = (promise) ->
       console.error err
 
 faithful.return = (value) -> # returns a promise which resolves to value
-  faithful.makePromise (resolve) -> resolve value
+  makePromise (resolve) -> resolve value
 
 faithful.throw = (error) -> # returns a promise which rejects with error
-  faithful.makePromise (resolve, reject) -> reject value
+  makePromise (resolve, reject) -> reject value
