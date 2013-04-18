@@ -16,7 +16,7 @@
     "filter",
     "filterSeries"
   ],
-  "version": "0.4.5",
+  "version": "0.4.6",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "homepage": "https://github.com/meryn/faithful",
   "bugs": "https://github.com/meryn/faithful/issues",
