@@ -48,14 +48,12 @@ faithful.filter = (values, iterator) ->
   matchingValues = []
   faithful.each values, iterator,
     handleResult: (result, i) -> 
-      return unless result
-      matchingValues.push values[i]
+      matchingValues.push values[i] if result
     getFinalValue: -> matchingValues
     
 faithful.filterSeries = (values, iterator) ->
   matchingValues = []
   faithful.eachSeries values, iterator,
     handleResult: (result, i) -> 
-      return unless result
-      matchingValues.push values[i]
+      matchingValues.push values[i] if result
     getFinalValue: -> matchingValues
