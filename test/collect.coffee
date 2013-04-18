@@ -15,6 +15,13 @@ mixedValues = [
 ]
 
 describe "faithful.collect", ->
+  it "gives an empty object for an empty object", (next) -> 
+    faithful.collect({})
+      .then (properties) ->
+        assert.deepEqual properties, {}
+        next null
+      .then null, (err) ->
+        next err
   it "collects object properties", (next) -> 
     faithful.collect(mixedProperties)
       .then (properties) ->
@@ -22,6 +29,14 @@ describe "faithful.collect", ->
         assert.equal properties.def, "34"
         assert.equal properties.ghi, "56"
         assert.equal properties.jkl, "78"
+        next null
+      .then null, (err) ->
+        next err
+
+  it "gives an empty array for an empty array", (next) -> 
+    faithful.collect([])
+      .then (values) ->
+        assert.deepEqual values, []
         next null
       .then null, (err) ->
         next err
