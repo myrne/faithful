@@ -19,4 +19,4 @@ faithful.return = (value) -> # returns a promise which resolves to value
   makePromise (resolve) -> resolve value
 
 faithful.throw = (error) -> # returns a promise which rejects with error
-  makePromise (resolve, reject) -> reject value
+  makePromise (resolve, reject) -> reject error
