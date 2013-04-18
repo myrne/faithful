@@ -3,6 +3,7 @@ faithful.adapt = require "./adapt"
 faithful.eachSeries = require "./eachSeries"
 faithful.each = require "./each"
 faithful.makePromise = require "./makePromise"
+faithful[name] = fn for name, fn in require "./utilities"
 
 faithful.map = (values, iterator) ->
   results = []
@@ -15,12 +16,6 @@ faithful.mapSeries = (inputs, iterator) ->
   faithful.eachSeries inputs, iterator,
     handleResult: (result) -> results.push result
     getFinalValue: -> results
-  
-faithful.return = (value) -> # returns a promise which resolves to value
-  faithful.makePromise (resolve) -> resolve value
-
-faithful.throw = (error) -> # returns a promise which rejects with error
-  faithful.makePromise (resolve, reject) -> reject value
 
 faithful.reduce = (values, reduction, iterator) ->
   faithful.eachSeries values, ((value) -> iterator reduction, value),
@@ -64,17 +59,3 @@ faithful.filterSeries = (values, iterator) ->
       return unless result
       matchingValues.push values[i]
     getFinalValue: -> matchingValues
-    
-faithful.log = (promise) ->
-  promise
-    .then (value) -> 
-      console.log value
-    .then null, (err) -> 
-      console.error err
-
-faithful.dir = (promise) ->
-  promise
-    .then (value) -> 
-      console.log value
-    .then null, (err) -> 
-      console.error err
