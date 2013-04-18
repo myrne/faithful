@@ -25,6 +25,10 @@ Faithful mimics the [Async](https://github.com/caolan/async) API, with three imp
 * The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js)).
 * The iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
 
+#### Note about CoffeeScript
+
+All usage examples below are written in CoffeeScript, but the code made available through the package is pure JavaScript, and works perfectly fine with JavasScript code. If you are unfamiliar with CoffeeScript syntax, you could copy and paste the code examples into the CoffeeScript compiler demo at [CoffeeScript.org](http://coffeescript.org/) . When you're there, click "Try Coffeescript" in the navigation bar.
+
 ### faithful.each
 
 ```coffee
