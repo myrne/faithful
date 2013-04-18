@@ -2,7 +2,7 @@ makePromise = require "./makePromise"
 
 module.exports = each = (values, iterator, options = {}) ->
   makePromise (resolve, reject) ->
-    return resolve [] unless values.length
+    return resolve options.getFinalValue?() unless values.length
     try
       promises = (iterator value for value in values)
     catch error
