@@ -16,7 +16,7 @@
     "filter",
     "filterSeries"
   ],
-  "version": "0.4.10",
+  "version": "0.4.11",
   "author": "Meryn Stol <merynstol@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/meryn/faithful",
