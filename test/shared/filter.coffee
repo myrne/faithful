@@ -4,7 +4,7 @@ faithful = require "../../"
 timeout = 100
 length = 20
 
-module.exports = testMap = (subjectFn, it) ->
+module.exports = testFilter = (subjectFn, it) ->
   inputs = (i for i in [0...10])
   expectedOutputs = (i*2 for i in inputs)
   it "finds the prime numbers", (next) ->
@@ -24,7 +24,27 @@ module.exports = testMap = (subjectFn, it) ->
         next null
       .then null, (err) ->
         next err
-
+  it "gives empty array when no inputs match", (next) ->
+    detectPrime = (number) ->
+      faithful.makePromise (resolve) ->
+        setImmediate -> resolve null
+    subjectFn([1,2,3], detectPrime)
+      .then (results) ->
+        assert.equal results.length, 0
+        next null
+      .then null, (err) ->
+        next err
+  it "gives array with single value if one input matches", (next) ->
+    detectPrime = (number) ->
+      faithful.makePromise (resolve) ->
+        setImmediate -> resolve true
+    subjectFn([2], detectPrime)
+      .then (results) ->
+        assert.equal results.length, 1
+        assert.deepEqual results, [2]
+        next null
+      .then null, (err) ->
+        next err
         
 delayRandomly = (maxTimeout, fn) ->
   delay (Math.round(Math.random() * maxTimeout)), fn
