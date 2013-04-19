@@ -3,6 +3,10 @@ makePromise = require "./makePromise"
 module.exports = process = (values, iterator, options ={}) ->
   i = 0
   makePromise (resolve, reject) ->
+    resolver = (i) ->
+      (result) -> 
+        options.handleResult? result, i
+        iterate()
     iterate = ->
       if (i >= values.length) or options.stopEarly?()
         resolve options.getFinalValue?()
@@ -13,9 +17,7 @@ module.exports = process = (values, iterator, options ={}) ->
           return reject err
         try
           localPromise
-            .then (result) ->
-              options.handleResult? result
-              iterate()
+            .then(resolver(i))
             .then null, (err) -> reject err
         catch error
           reject error
