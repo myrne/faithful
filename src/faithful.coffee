@@ -60,15 +60,7 @@ faithful.filterSeries = (values, iterator) ->
     getFinalValue: -> matchingValues
 
 faithful.series = (functions) ->
-  results = []
-  faithful.eachSeries functions, ((fn) -> fn()),
-    handleResult: (result, i) ->
-      results[i] = result
-    getFinalValue: -> results
+  faithful.mapSeries functions, (fn) -> fn()
 
 faithful.parallel = (functions) ->
-  results = []
-  faithful.each functions, ((fn) -> fn()),
-    handleResult: (result, i) ->
-      results[i] = result
-    getFinalValue: -> results
+  faithful.map functions, (fn) -> fn()
