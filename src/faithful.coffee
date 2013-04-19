@@ -64,3 +64,15 @@ faithful.series = (functions) ->
 
 faithful.parallel = (functions) ->
   faithful.map functions, (fn) -> fn()
+  
+faithful.applyToEach = (functions, args...) ->
+  faithful.map functions, (fn) -> fn.apply {}, args
+
+faithful.applyToEachSeries = (functions, args...) ->
+  faithful.mapSeries functions, (fn) -> fn.apply {}, args
+
+faithful.applyEach = (pairs, iterator) ->
+  faithful.map pairs, (pair) -> iterator.apply {}, pair
+
+faithful.applyEachSeries = (pairs, iterator) ->
+  faithful.mapSeries pairs, (pair) -> iterator.apply {}, pair
