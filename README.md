@@ -14,8 +14,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 * `return`, `fulfill` - returns a promise that has been fulfilled with specified value
 * `throw`, `fail` - returns a promise that has failed with specified error
-* `log` - logs the resolved value of a promise with `console.log`
-* `dir` - logs the resolved value of a promise with `console.dir`
+* `log` - logs the fulfillment value of a promise with `console.log`
+* `dir` - logs the fulfillment value of a promise with `console.dir`
 
 ## Usage
 
@@ -39,7 +39,7 @@ faithful.each(inputs, iterator)
     console.error error
 ```
 
-`faithful.eachSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator has resolved.
+`faithful.eachSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator is fulfilled.
 
 `each` and `eachSeries` are also available as `forEach` and `forEachSeries`, respectively.
 
@@ -53,7 +53,7 @@ faithful.map(inputs, iterator)
     console.error error
 ```
 
-`faithful.mapSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator has resolved.
+`faithful.mapSeries` works the same, but ensures the iterator is not called with the next argument until the promise returned by the previous iterator is fulfilled.
 
 ### faithful.reduce
 
@@ -91,13 +91,13 @@ faithful.detect(inputs, iterator)
     console.error error
 ```
 
-`faithful.detect` gives as result the first input value for which the promises returned by the iterator resolved to a truthy value (i.e. something that evalates to `true` in context of an if-statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
+`faithful.detect` gives as result the first input value for which the promises returned by the iterator was fulfilled with a truthy value (i.e. something that evalates to `true` in context of an if-statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
 
-Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have resolved -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to resolve first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
+Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have been fulfilled -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to be fulfilled first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
 
 ### faithful.log
 
-`faithful.log` logs the resolved value of the promise using `console.log`, and the failure value with `console.error` otherwise.
+`faithful.log` logs the fulfillment value of the promise using `console.log`, and the failure value with `console.error` otherwise.
 
 ```coffee
 faithful.log faithful.return "abc"
@@ -106,7 +106,7 @@ faithful.log faithful.return "abc"
 
 ### faithtful.dir
 
-`faithful.dir` logs the resolved value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
+`faithful.dir` logs the fulfillment value of the promise using `console.dir`, and the failure value with `console.error` otherwise.
 
 ```coffee
 faithful.dir faithful.return abc:123
@@ -133,8 +133,8 @@ faithful.reduce = (values, reduction, iterator) ->
 #### Things of note
 
 * The iterator passed to `map` must be slightly adapter before being passed to `eachSeries`, because `eachSeries` calls the iterator with only the a value from the values array, while the iterator passed to `map` also takes a `reduction` argument (as it's first argument). 
-* `handleResult` is called for every promise that resolves. In this case, the result is assigned to the local `reduction` variable (note its listes in the `reduce` function arguments).
-* When every promise has resolved, the promise that `eachSeries` returns gets resolved with the value returned by `getFinalValue`.
+* `handleResult` is called for every promise that is fulfilled. In this case, the result is assigned to the local `reduction` variable (note its listes in the `reduce` function arguments).
+* When every promise is fulfilled, the promise that `eachSeries` returns will be fulfilled with the value returned by `getFinalValue`.
 
 ### Implementation of faithful.detect
 
@@ -147,7 +147,7 @@ faithful.detect = (values, iterator) ->
       return unless result # did iterator find a match?
       foundValue = values[index] # look up the value that made the iterator match
       found = true # remember that we found something
-    getFinalValue: -> foundValue # let promise resolve with the found value
+    getFinalValue: -> foundValue # fulfill promise with the found value
     stopEarly: -> found # stop the processing when we found something
 ```
 
