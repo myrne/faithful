@@ -65,10 +65,9 @@ The example below is a pretty involved way of computing the factorial of 4 (i.e.
 
 ```coffee
 iterator = (reduction, value) ->
-  promise = new RSVP.Promise
-  setImmediate ->
-    promise.resolve reduction * value
-  promise
+  faithful.makePromise (resolve, reject) ->
+    setImmediate ->
+      resolve reduction * value
 faithful.reduce([1,2,3,4], 1, iterator)
   .then (reduction) ->
     console.log reduction # 4! == 24
