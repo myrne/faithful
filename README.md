@@ -12,8 +12,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Utility functions
 
-* `return` - returns a resolved promise with specified value
-* `throw` - returns a failed promise with specified error
+* `return`, `fulfill` - returns a promise that has been fulfilled with specified value
+* `throw`, `fail` - returns a promise that has failed with specified error
 * `log` - logs the resolved value of a promise with `console.log`
 * `dir` - logs the resolved value of a promise with `console.dir`
 

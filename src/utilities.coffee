@@ -15,8 +15,8 @@ faithful.dir = (promise) ->
     .then null, (err) -> 
       console.error err
 
-faithful.return = (value) -> # returns a promise which resolves to value
+faithful.return = faithful.fulfill = (value) ->
   makePromise (resolve) -> resolve value
 
-faithful.throw = (error) -> # returns a promise which rejects with error
+faithful.throw = faithful.fail = (error) ->
   makePromise (resolve, reject) -> reject error
