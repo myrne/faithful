@@ -1,7 +1,6 @@
 require "setimmediate"
 
 assert = require "assert"
-RSVP = require "rsvp"
 
 testSeries = require "./shared/series"
 testAny = require "./shared/any"

@@ -1,7 +1,6 @@
 require "setimmediate"
 
 assert = require "assert"
-RSVP = require "rsvp"
 
 faithful = require "../"
 

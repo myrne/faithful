@@ -1,12 +1,13 @@
 require "setimmediate"
 
 assert = require "assert"
-RSVP = require "rsvp"
 
 faithful = require "../"
 
 testAny = require "./shared/any"
 testSeries = require "./shared/series"
+
+makePromise = require "make-promise"
 
 factorial = (n) ->
   return 1 if n is 0 or n is 1
@@ -17,10 +18,8 @@ describe "faithful.reduce", ->
   expectedOutput = factorial 9
   it "works for pseudo-factorial", (next) ->
     fn = (memo, value) ->
-      promise = new RSVP.Promise
-      setImmediate ->
-        promise.resolve(memo * value)
-      promise
+      makePromise (resolve) ->
+        setImmediate -> resolve(memo * value)
     faithful.reduce(inputs, 1, fn)
       .then (output) ->
         assert.equal output, expectedOutput
@@ -30,10 +29,8 @@ describe "faithful.reduce", ->
   it "works for building string (checks serial execution)", (next) ->
     testString = "testString"
     fn = (memo, value) ->
-      promise = new RSVP.Promise
-      delayRandomly 50, ->
-        promise.resolve memo + value
-      promise
+      makePromise (resolve) ->
+        delayRandomly 50, -> resolve memo + value
     faithful.reduce(testString, "", fn)
       .then (output) ->
         assert.equal output, testString
