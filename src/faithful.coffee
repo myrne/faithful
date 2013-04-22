@@ -2,7 +2,7 @@ module.exports = faithful = {}
 faithful.adapt = require "./adapt"
 faithful.eachSeries = require "./eachSeries"
 faithful.each = require "./each"
-faithful.makePromise = require "./makePromise"
+faithful.makePromise = require "make-promise"
 faithful[name] = fn for name, fn of require "./utilities"
 faithful.collect = require "./collect"
 

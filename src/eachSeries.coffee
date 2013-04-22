@@ -1,4 +1,4 @@
-makePromise = require "./makePromise"
+makePromise = require "make-promise"
 
 module.exports = process = (values, iterator, options ={}) ->
   i = 0

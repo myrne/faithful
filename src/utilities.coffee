@@ -1,4 +1,4 @@
-makePromise = require "./makePromise"
+makePromise = require "make-promise"
 module.exports = faithful = {}
     
 faithful.log = (promise) ->
