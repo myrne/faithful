@@ -22,7 +22,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 Faithful mimics the [Async](https://github.com/caolan/async) API, with three important differences:
 
 * The functions don't have a callback argument.
-* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [RSVP.js](https://github.com/tildeio/rsvp.js)).
+* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [Promiscuous](https://npmjs.org/package/promiscuous)).
 * The iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
 
 #### Note about CoffeeScript
