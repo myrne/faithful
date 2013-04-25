@@ -11,7 +11,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `filter`, `filterSeries`
 * `applyEach` - WARNING: works differently than Async's `applyEach`
 
-### Control-flow functions
+### Flow-control functions
 
 * `series`
 * `parallel`
@@ -25,7 +25,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `dir` - logs the fulfillment value of a promise with `console.dir`.
 * `makePromise` - the function that is exported by [make-promise](http://npmjs.org/package/make-promise), powered by [Promiscuous](https://npmjs.org/package/promiscuous).
 * `adapt` - converts a typical async function (with `(err, result)` callback) into a function that returns a promise.
-* `collect` - pass it a an array or object with promises (or a mix of promises and regular values) and when the promise returned is fulfilled, all promises in the array have been replaced by the value they were fulfilled with.
+* `collect` - pass it an array or object with promises (or a mix of promises and regular values) and when the returned promise is fulfilled, all promises in the array or object have been replaced by the value they were fulfilled with.
 
 ## Usage
 
