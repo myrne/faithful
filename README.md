@@ -9,6 +9,13 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `reduce`
 * `detect`, `detectSeries` 
 * `filter`, `filterSeries`
+* `applyEach` - WARNING: works differently than Async's applyEach
+
+### Control-flow functions
+
+* `series`
+* `parallel`
+* `applyToEach` (works similar to Async's `applyEach`)
 
 ### Utility functions
 
@@ -16,6 +23,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `throw`, `fail` - returns a promise that has failed with specified error
 * `log` - logs the fulfillment value of a promise with `console.log`
 * `dir` - logs the fulfillment value of a promise with `console.dir`
+* `makePromise` - the function that is exported by [make-promise](http://npmjs.org/make-promise), powered by Promiscuous
+* `collect` - pass it a an array or object with promises (or a mix of promises and regular values) and when the promise returned is fulfilled, all promises in the array have been replaced by the value they were fulfilled with.
 
 ## Usage
 
@@ -93,6 +102,24 @@ faithful.detect(inputs, iterator)
 `faithful.detect` gives as result the first input value for which the promises returned by the iterator was fulfilled with a truthy value (i.e. something that evalates to `true` in context of an if-statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
 
 Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have been fulfilled -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to be fulfilled first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
+
+## faithful.applyEach - different from async.applyEach
+
+`faithful.applyEach` takes as first argument an array of argument arrays, and as second argument the iterator function you want to apply these arguments to. This is very handy for typical jobs like renaming files with `fs.rename` or writing files with `fs.writeFile`. The value for `this` for the iterator will be an empty object.
+
+```coffee
+fs = require "fs"
+faithful = require "faithful"
+renameFile = faithful.adapt fs.rename
+renamePairs = [["a","A"],["b","B"],["c","C"]]
+faithful.applyEach(renamePairs, rename)
+  .then ->
+    console.log "Done renaming files."
+  .then null, (err) ->
+    console.error err
+````
+
+The functionality of Async's applyEach is offered as `faithful.applyToEach`.
 
 ### faithful.log
 
