@@ -9,7 +9,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `reduce`
 * `detect`, `detectSeries` 
 * `filter`, `filterSeries`
-* `applyEach` - WARNING: works differently than Async's applyEach
+* `applyEach` - WARNING: works differently than Async's `applyEach`
 
 ### Control-flow functions
 
@@ -19,11 +19,12 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Utility functions
 
-* `return`, `fulfill` - returns a promise that has been fulfilled with specified value
-* `throw`, `fail` - returns a promise that has failed with specified error
-* `log` - logs the fulfillment value of a promise with `console.log`
-* `dir` - logs the fulfillment value of a promise with `console.dir`
-* `makePromise` - the function that is exported by [make-promise](http://npmjs.org/make-promise), powered by Promiscuous
+* `return`, `fulfill` - returns a promise that has been fulfilled with specified value.
+* `throw`, `fail` - returns a promise that has failed with specified error.
+* `log` - logs the fulfillment value of a promise with `console.log`.
+* `dir` - logs the fulfillment value of a promise with `console.dir`.
+* `makePromise` - the function that is exported by [make-promise](http://npmjs.org/package/make-promise), powered by [Promiscuous](https://npmjs.org/package/promiscuous).
+* `adapt` - converts a typical async function (with `(err, result)` callback) into a function that returns a promise.
 * `collect` - pass it a an array or object with promises (or a mix of promises and regular values) and when the promise returned is fulfilled, all promises in the array have been replaced by the value they were fulfilled with.
 
 ## Usage
@@ -32,7 +33,7 @@ Faithful mimics the [Async](https://github.com/caolan/async) API, with three imp
 
 * The functions don't have a callback argument.
 * The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [Promiscuous](https://npmjs.org/package/promiscuous)).
-* The iterator is not passed a callback argument. Instead, an iterator is expected to return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
+* The iterator is not passed a callback function as its last argument. Instead, the iterator must return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
 
 #### Note about CoffeeScript
 
