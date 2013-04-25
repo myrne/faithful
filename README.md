@@ -17,6 +17,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `parallel`
 * `applyToEach` (works similar to Async's `applyEach`)
 
+Since a promises cannot be fulfilled with multiple values, and regular chaining is already well taken care of by chaining `.then` calls, there is no equivalent to `async.waterfall`. If you have a need for using multiple results from past functions inside a new function, I suggest to take a look at [Memoblock](https://github.com/meryn/memoblock).
+
 ### Utility functions
 
 * `return`, `fulfill` - returns a promise that has been fulfilled with specified value.
