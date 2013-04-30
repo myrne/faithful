@@ -104,7 +104,7 @@ faithful.detect(inputs, iterator)
 
 `faithful.detect` gives as result the first input value for which the promises returned by the iterator was fulfilled with a truthy value (i.e. something that evalates to `true` in context of an if-statement). If no input value matched the criteria set by the iterator, then the result will be `undefined`.
 
-Because `faithful.detect` starts with calling the iterator once for each value in the `inputs array - before any of the promises returned have been fulfilled -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to be fulfilled first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
+Because `faithful.detect` starts with calling the iterator once for each value in the `inputs` array - before any of the promises returned have been fulfilled -, the result you'll get from `detect` will not necessarily be the first value inside the input array that matches the criteria set by the iterator. Rather, it's the result for which the promise returned by the iterator happened to be fulfilled first. Because of that, you may want to use `detectSeries` so that inputs are checked one by one, in order. With `detectSeries` you'll always get back the first among the inputs that matched the criteria.
 
 ## faithful.applyEach - different from async.applyEach
 
@@ -148,6 +148,8 @@ All collection functions of Faithful are powered by two functions that do most o
 
 Both `faithful.each` and `faithful.eachSeries` take the following arguments: `values`, `iterator` and an optional `options` object. This options object allows you to configure the iteration process. Look at it as a configurable loop. All options are optional.
 
+**Use with caution**: The specifics of the `options` object may well change in the future. However, I think it's too useful not to share.
+
 ### Implementation of faithful.reduce
 
 To get a sense of how you can build something quickly which is not implemented by Faithful yet, take a look at how the `Faithful.reduce` is implemented.
@@ -185,10 +187,6 @@ faithful.detect = (values, iterator) ->
 * In contrast to the implementation of `faithful.reduce` shown above, here the iterator gets passed on unchanged to `faithful.each`.
 * `handleResult` takes a second argument `index`, which is the array index for the value that resulted in the current result. Here, the index is used to look up the original input value for the index, and set that as `foundValue`.
 * When you provide a `stopEarly` function, you can cause the processing to stop before it would otherwise have. Here, we're done as soon as we've found a value. Noe that in case of `each`, the iterator will already have been called with all the values in the array, so only processing of results will stop. In case of `eachSeries`, it will prevent any further calls to `iterator`.
-
-### Use with caution
-
-The specifics of the `options` object may well change in the future. However, I think it's too useful not to share.
 
 ## Credits
 
