@@ -23,6 +23,7 @@ Since a promises cannot be fulfilled with multiple values, and regular chaining 
 
 * `return`, `fulfill` - returns a promise that has been fulfilled with specified value.
 * `throw`, `fail` - returns a promise that has failed with specified error.
+* `throwHard` - only for debugging or simple scripting purposes, this method will do two things: First, it throws an error in the current tick (which will cause the promise to be rejected). After that, during the next tick, it writes the error stack to the console and ends the Node.js process with `process.exit(1)`. Doing so helps make failures visible, without needing to add manual error handling somewhere in the promise chain.
 * `log` - logs the fulfillment value of a promise with `console.log`.
 * `dir` - logs the fulfillment value of a promise with `console.dir`.
 * `makePromise` - the function that is exported by [make-promise](http://npmjs.org/package/make-promise), powered by [Promiscuous](https://npmjs.org/package/promiscuous).
