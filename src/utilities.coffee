@@ -20,3 +20,7 @@ faithful.return = faithful.fulfill = (value) ->
 
 faithful.throw = faithful.fail = (error) ->
   makePromise (resolve, reject) -> reject error
+
+faithful.ensurePromise = (value) ->
+  return value if value and typeof value.then is "function"
+  return faithful.return value
