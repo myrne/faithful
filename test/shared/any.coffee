@@ -49,10 +49,10 @@ module.exports = testAny = (subjectFn, it) ->
     argumentsUsed = (false for i in [0...10])
     inputs = (i for i in [0...10])
     fn = (value) ->
-      faithful.makePromise (resolve) ->
+      faithful.makePromise (cb) ->
         setImmediate ->
           argumentsUsed[value] = true
-          resolve()
+          cb()
     subjectFn(inputs, fn)
       .then ->
         assert.ok argumentsUsed[input], "Argument #{input} was not used." for input in inputs
@@ -67,8 +67,8 @@ module.exports = testAny = (subjectFn, it) ->
       assert.ok !argsUsed[i], "Arg #{i} has been used before arg #{arg}." for i in [arg...length]
       argsUsed[arg] = true
       callOrder.push arg
-      faithful.makePromise (resolve) ->
-        delayRandomly timeout, -> resolve()
+      faithful.makePromise (cb) ->
+        delayRandomly timeout, -> cb()
     subjectFn(inputs, fn)
       .then ->
         next null

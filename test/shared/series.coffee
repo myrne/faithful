@@ -14,11 +14,11 @@ module.exports = testSeries = (subjectFn, it) ->
     fn = (value) ->
       argsUsed[value] = true
       callOrder.push value
-      faithful.makePromise (resolve, reject) ->
+      faithful.makePromise (cb) ->
         if value is 5
-          delayRandomly timeout, -> reject new Error "Random Error."
+          delayRandomly timeout, -> cb new Error "Random Error."
         else
-          delayRandomly timeout, -> resolve()
+          delayRandomly timeout, -> cb()
     subjectFn(inputs, fn)
       .then ->
         next new Error "eachSeries should have failed, but hasn't."

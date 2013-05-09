@@ -11,9 +11,9 @@ describe "faithful.applyEach", ->
   it "calls iterator with values inside the given arrays", (next) ->
     pairsReceived = []
     printArgs = (arg1, arg2)->
-      faithful.makePromise (resolve) ->
+      faithful.makePromise (cb) ->
         pairsReceived.push [arg1,arg2]
-        resolve null
+        cb null, null
     faithful.applyEach(pairs, printArgs)
       .then ->
         assert.deepEqual pairs, pairsReceived

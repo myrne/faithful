@@ -16,10 +16,10 @@ faithful.dir = (promise) ->
       console.error err
 
 faithful.return = faithful.fulfill = (value) ->
-  makePromise (resolve) -> resolve value
+  makePromise (cb) -> cb null, value
 
 faithful.throw = faithful.fail = (error) ->
-  makePromise (resolve, reject) -> reject error
+  makePromise (cb) -> cb error, null, true
 
 faithful.ensurePromise = (value) ->
   return value if value and typeof value.then is "function"

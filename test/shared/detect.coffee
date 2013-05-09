@@ -11,8 +11,8 @@ module.exports = testMap = (subjectFn, it) ->
     numbers = [4,6,8,9,10,12,14,15,16,17,18,19,20]
     primes = (number for number in numbers when isPrime number)
     detectPrime = (number) ->
-      faithful.makePromise (resolve) ->
-        setImmediate -> resolve isPrime number
+      faithful.makePromise (cb) ->
+        setImmediate -> cb null, isPrime number
     subjectFn(numbers, detectPrime)
       .then (prime) ->
         return next null if isPrime prime

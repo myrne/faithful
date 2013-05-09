@@ -9,8 +9,8 @@ module.exports = testMap = (subjectFn, it) ->
   expectedOutputs = (i*2 for i in inputs)
   it "returns promise that resolves to correct array", (next) ->
     fn = (value) ->
-      faithful.makePromise (resolve) ->
-        setImmediate -> resolve value * 2
+      faithful.makePromise (cb) ->
+        setImmediate -> cb null, value * 2
     subjectFn(inputs, fn).then (outputs) ->
       assert.equal outputs[i], expectedOutputs[i] for i in [0..10]
       next null

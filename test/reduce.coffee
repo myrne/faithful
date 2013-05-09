@@ -18,8 +18,8 @@ describe "faithful.reduce", ->
   expectedOutput = factorial 9
   it "works for pseudo-factorial", (next) ->
     fn = (memo, value) ->
-      makePromise (resolve) ->
-        setImmediate -> resolve(memo * value)
+      makePromise (cb) ->
+        setImmediate -> cb null, memo * value
     faithful.reduce(inputs, 1, fn)
       .then (output) ->
         assert.equal output, expectedOutput
@@ -29,8 +29,8 @@ describe "faithful.reduce", ->
   it "works for building string (checks serial execution)", (next) ->
     testString = "testString"
     fn = (memo, value) ->
-      makePromise (resolve) ->
-        delayRandomly 50, -> resolve memo + value
+      makePromise (cb) ->
+        delayRandomly 50, -> cb null, memo + value
     faithful.reduce(testString, "", fn)
       .then (output) ->
         assert.equal output, testString
