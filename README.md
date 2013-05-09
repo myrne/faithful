@@ -26,7 +26,7 @@ Since a promises cannot be fulfilled with multiple values, and regular chaining 
 * `throwHard` - only for debugging or simple scripting purposes, this method will do two things: First, it throws an error in the current tick (which will cause the promise to be rejected). After that, during the next tick, it writes the error stack to the console and ends the Node.js process with `process.exit(1)`. Doing so helps make failures visible, without needing to add manual error handling somewhere in the promise chain.
 * `log` - logs the fulfillment value of a promise with `console.log`.
 * `dir` - logs the fulfillment value of a promise with `console.dir`.
-* `makePromise` - the function that is exported by [make-promise](http://npmjs.org/package/make-promise), powered by [Promiscuous](https://npmjs.org/package/promiscuous).
+* `makePromise` - the function that is exported by [make-promise](http://npmjs.org/package/make-promise).
 * `adapt` - converts a typical async function (with `(err, result)` callback) into a function that returns a promise.
 * `collect` - pass it an array or object with promises (or a mix of promises and regular values) and when the returned promise is fulfilled, all promises in the array or object have been replaced by the value they were fulfilled with.
 
@@ -78,9 +78,9 @@ The example below is a pretty involved way of computing the factorial of 4 (i.e.
 
 ```coffee
 iterator = (reduction, value) ->
-  faithful.makePromise (resolve, reject) ->
+  faithful.makePromise (cb) ->
     setImmediate ->
-      resolve reduction * value
+      cb null, reduction * value
 faithful.reduce([1,2,3,4], 1, iterator)
   .then (reduction) ->
     console.log reduction # 4! == 24
