@@ -2,7 +2,7 @@ assert = require "assert"
 
 timeout = 100
 length = 20
-faithful = require "../../"
+faithful = require "../../../"
 
 module.exports = testMap = (subjectFn, it) ->
   inputs = (i for i in [0...10])

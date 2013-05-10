@@ -1,5 +1,5 @@
 assert = require "assert"
-faithful = require "../"
+faithful = require "../../"
 
 mixedProperties =
   abc: "12"

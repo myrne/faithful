@@ -3,7 +3,7 @@ assert = require "assert"
 timeout = 100
 length = 20
 
-faithful = require "../../"
+faithful = require "../../../"
 
 module.exports = testSeries = (subjectFn, it) ->
   it "stops calling fn when a call of fn fails", (next) ->

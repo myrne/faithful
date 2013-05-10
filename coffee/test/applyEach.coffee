@@ -1,4 +1,4 @@
-faithful = require "../"
+faithful = require "../../"
 assert = require "assert"
 
 pairs = [

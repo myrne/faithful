@@ -2,7 +2,7 @@ require "setimmediate"
 
 assert = require "assert"
 
-faithful = require "../"
+faithful = require "../../"
 
 testAny = require "./shared/any"
 testDetect= require "./shared/detect"

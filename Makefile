@@ -1,13 +1,13 @@
 build:
 	mkdir -p lib
 	rm -rf lib/*
-	node_modules/.bin/coffee --compile -m --output lib/ src/
+	node_modules/.bin/coffee --compile -m --output js/ coffee/
 
 watch:
-	node_modules/.bin/coffee --watch --compile --output lib/ src/
+	node_modules/.bin/coffee --watch --compile --output js/ coffee/
 	
 test:
-	node_modules/.bin/mocha
+	node_modules/.bin/mocha js/test/*.js --compilers coffee:coffee-script --reporter spec
 
 jumpstart:
 	npm install

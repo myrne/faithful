@@ -1,5 +1,5 @@
 assert = require "assert"
-faithful = require "../../"
+faithful = require "../../../"
 
 timeout = 100
 length = 20

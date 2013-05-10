@@ -1,5 +1,5 @@
 assert = require "assert"
-faithful = require "../"
+faithful = require "../../"
 
 describe "faithful.adapt", ->
   timesTwo = faithful.adapt (number, next) ->

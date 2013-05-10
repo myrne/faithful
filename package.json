@@ -40,7 +40,7 @@
     "node": "0.10.x",
     "npm": "1.2.x"
   },
-  "main": "lib/faithful.js",
+  "main": "js/lib/faithful.js",
   "scripts": {
     "prepublish": "npm test",
     "pretest": "make build",
