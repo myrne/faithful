@@ -1,0 +1,26 @@
+{
+  "name": "faithful",
+  "repo": "meryn/faithful",
+  "description": "Like Async, but employing promises.",
+  "version": "0.6.0",
+  "keywords": [],
+  "dependencies": {
+    "meryn/make-promise": "*"
+  },
+  "development": {
+    "timoxley/assert": "*"
+  },
+  "license": "MIT",
+  "main": "js/lib/faithful.js",
+  "scripts": [
+    "js/lib/adapt.js",
+    "js/lib/collect.js",
+    "js/lib/collections.js",
+    "js/lib/each.js",
+    "js/lib/eachSeries.js",
+    "js/lib/faithful.js",
+    "js/lib/flow-control.js",
+    "js/lib/throwHard.js",
+    "js/lib/utilities.js"
+  ]
+}
