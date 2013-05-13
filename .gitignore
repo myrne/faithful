@@ -3,3 +3,5 @@
 /lib/
 /js/test/
 *.map
+/build/
+/components/

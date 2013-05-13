@@ -1,4 +1,4 @@
-excludeDirectories = "{.git,node_modules}"
+excludeDirectories = "{.git,node_modules,build,components}"
 excludeInFolderSearch = "{excludeDirectories,lib}"
 
 includeFiles = "{.gitignore,.npmignore,.travis.yml}"
