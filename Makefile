@@ -22,4 +22,4 @@ jumpstart:
 	git commit -m "jumpstart commit."
 	git push -u origin master
 
-.PHONY: test
+.PHONY: test build
