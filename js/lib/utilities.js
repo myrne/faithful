@@ -35,10 +35,14 @@
   };
 
   faithful.ensurePromise = function(value) {
-    if (value && typeof value.then === "function") {
+    if (faithful.isPromise(value)) {
       return value;
     }
     return faithful["return"](value);
+  };
+
+  faithful.isPromise = function(value) {
+    return value && typeof value.then === "function";
   };
 
 }).call(this);

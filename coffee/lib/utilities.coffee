@@ -10,7 +10,7 @@ faithful.log = (promise) ->
 
 faithful.dir = (promise) ->
   promise
-    .then (value) -> 
+    .then (value) ->
       console.log value
     .then null, (err) -> 
       console.error err
@@ -22,5 +22,8 @@ faithful.throw = faithful.fail = (error) ->
   makePromise (cb) -> cb error, null, true
 
 faithful.ensurePromise = (value) ->
-  return value if value and typeof value.then is "function"
+  return value if faithful.isPromise value
   return faithful.return value
+  
+faithful.isPromise = (value) ->
+  value and typeof value.then is "function"
