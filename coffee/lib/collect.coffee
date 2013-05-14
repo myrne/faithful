@@ -1,4 +1,4 @@
-{fulfill,fail,ensurePromise} = require "./utilities"
+{fulfill,fail,ensurePromise,isPromise} = require "./utilities"
 each = require "./each"
 
 module.exports = collect = (value) ->
@@ -18,11 +18,17 @@ collectValues = (array) ->
     getFinalValue: -> results
 
 collectProperties = (object) ->
-  names = Object.keys object
-  values = (value for name, value of object)
+  promisesIndex = {}
   newProperties = {}
-  each values, ensurePromise,
-    handleResult: (value, i) -> newProperties[names[i]] = value
+  for name, value of object
+    if isPromise value
+      promisesIndex[name] = value
+    else
+      newProperties[name] = value
+  promises = (value for name, value of promisesIndex)
+  promiseNames = Object.keys promisesIndex
+  each promises, ((p) -> p),
+    handleResult: (value, i) -> newProperties[promiseNames[i]] = value
     getFinalValue: -> newProperties
 
 getTypeOf = do ->
