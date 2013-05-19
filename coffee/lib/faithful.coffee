@@ -9,5 +9,8 @@ module.exports = faithful =
   collect: require "./collect"
   throwHard: require "./throwHard"
 
-for moduleName in ['utilities','collections','flow-control']
-  faithful[name] = fn for name, fn of require "./#{moduleName}"
+faithful[name] = fn for name, fn of mod for mod in [
+  require "./utilities"
+  require "./collections"
+  require "./flow-control"
+]
