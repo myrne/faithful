@@ -17,7 +17,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 * `parallel`
 * `applyToEach` (works similar to Async's `applyEach`)
 
-Since a promises cannot be fulfilled with multiple values, and regular chaining is already well taken care of by chaining `.then` calls, there is no equivalent to `async.waterfall`. If you have a need for using multiple results from past functions inside a new function, I suggest to take a look at [Memoblock](https://github.com/meryn/memoblock).
+Since a promise cannot be fulfilled with multiple values, and regular chaining is already well taken care of by chaining `.then` calls, there is no equivalent to `async.waterfall`. If you have a need for using multiple results from past functions inside a new function, I suggest to take a look at [Memoblock](https://github.com/meryn/memoblock).
 
 ### Utility functions
 
@@ -35,7 +35,7 @@ Since a promises cannot be fulfilled with multiple values, and regular chaining 
 Faithful mimics the [Async](https://github.com/caolan/async) API, with three important differences:
 
 * The functions don't have a callback argument.
-* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [Promiscuous](https://npmjs.org/package/promiscuous)).
+* The functions return a [Promises/A+](http://promises-aplus.github.io/promises-spec/) promise (powered by [make-promise](http://npmjs.org/package/make-promise))
 * The iterator is not passed a callback function as its last argument. Instead, the iterator must return a promise. If the iterator throws an error or does not return a promise-like object (i.e. it does not have a `then` method), then the promise returned by the Faithful function will fail.
 
 #### Note about CoffeeScript
