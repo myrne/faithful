@@ -27,3 +27,18 @@ faithful.ensurePromise = (value) ->
   
 faithful.isPromise = (value) ->
   value and typeof value.then is "function"
+
+faithful.forceTimeout = (time, promise) ->
+  makePromise (cb) ->
+    timerId = delay time, -> 
+      console.log "time out"
+      cb new Error "Timeout after #{time} ms."
+    promise
+      .then (result) ->
+        clearTimeout timerId
+        cb null, result
+      .then null, (err) ->
+        clearTimeout timerId
+        cb err
+
+delay = (time, fn) -> setTimeout fn, time
