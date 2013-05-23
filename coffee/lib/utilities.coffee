@@ -18,7 +18,7 @@ faithful.dir = (promise) ->
 faithful.return = faithful.fulfill = (value) ->
   makePromise (cb) -> cb null, value
 
-faithful.throw = faithful.fail = (error) ->
+faithful.throw = faithful.fail = faithful.reject = (error) ->
   makePromise (cb) -> cb error, null, true
 
 faithful.ensurePromise = (value) ->

@@ -28,7 +28,7 @@
     });
   };
 
-  faithful["throw"] = faithful.fail = function(error) {
+  faithful["throw"] = faithful.fail = faithful.reject = function(error) {
     return makePromise(function(cb) {
       return cb(error, null, true);
     });
