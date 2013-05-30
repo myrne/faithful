@@ -8,6 +8,8 @@
     forEach: require("./each"),
     eachSeries: require("./eachSeries"),
     forEachSeries: require("./eachSeries"),
+    eachLimit: require("./eachLimit"),
+    forEachLimit: require("./eachLimit"),
     adapt: require("./adapt"),
     makePromise: require("make-promise"),
     collect: require("./collect"),
