@@ -27,7 +27,8 @@
   },
   "private": false,
   "dependencies": {
-    "make-promise": "0.1.x"
+    "make-promise": "0.1.x",
+    "f-throttle": "~0.1.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.2",

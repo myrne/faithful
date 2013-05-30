@@ -1,9 +1,13 @@
 makePromise = require "make-promise"
+throttle = require "f-throttle"
 
 module.exports = each = (values, iterator, options = {}) ->
   makePromise (cb) ->
     return cb null, options.getFinalValue?() unless values.length
-    try promises = (iterator value for value in values)
+    options.concurrency ?= 1024
+    throttledIterator = throttle options.concurrency, iterator
+    return cb null, options.getFinalValue?() unless values.length
+    try promises = (throttledIterator value for value in values)
     catch error then return cb error
     stopped = false
     numRemaining = promises.length
