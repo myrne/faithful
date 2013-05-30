@@ -4,8 +4,8 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Collection functions
 
-* `each`, `eachSeries`
-* `map`, `mapSeries`
+* `each`, `eachSeries`, `eachLimit`
+* `map`, `mapSeries`, `mapLimit`
 * `reduce`
 * `detect`, `detectSeries` 
 * `filter`, `filterSeries`
@@ -14,7 +14,7 @@ Like [Async](https://github.com/caolan/async), but employing promises.
 ### Flow-control functions
 
 * `series`
-* `parallel`
+* `parallel`, `parallelLimit`
 * `applyToEach` (works similar to Async's `applyEach`)
 
 Since a promise cannot be fulfilled with multiple values, and regular chaining is already well taken care of by chaining `.then` calls, there is no equivalent to `async.waterfall`. If you have a need for using multiple results from past functions inside a new function, I suggest to take a look at [Memoblock](https://github.com/meryn/memoblock).
