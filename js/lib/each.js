@@ -6,22 +6,22 @@
 
   throttle = require("f-throttle");
 
-  module.exports = each = function(values, iterator, options) {
-    if (options == null) {
-      options = {};
-    }
+  module.exports = each = function(values, iterator, _arg) {
+    var concurrency, getFinalValue, handleResult, stopEarly, _ref;
+
+    _ref = _arg != null ? _arg : {}, concurrency = _ref.concurrency, handleResult = _ref.handleResult, stopEarly = _ref.stopEarly, getFinalValue = _ref.getFinalValue;
     return makePromise(function(cb) {
-      var error, i, numRemaining, promise, promises, resolver, stopped, throttledIterator, value, _i, _len, _ref, _results;
+      var error, i, numRemaining, promise, promises, resolver, stopped, throttledIterator, value, _i, _len, _results;
 
       if (!values.length) {
-        return cb(null, typeof options.getFinalValue === "function" ? options.getFinalValue() : void 0);
+        return cb(null, typeof getFinalValue === "function" ? getFinalValue() : void 0);
       }
-      if ((_ref = options.concurrency) == null) {
-        options.concurrency = 1024;
+      if (concurrency == null) {
+        concurrency = 1024;
       }
-      throttledIterator = throttle(options.concurrency, iterator);
+      throttledIterator = throttle(concurrency, iterator);
       if (!values.length) {
-        return cb(null, typeof options.getFinalValue === "function" ? options.getFinalValue() : void 0);
+        return cb(null, typeof getFinalValue === "function" ? getFinalValue() : void 0);
       }
       try {
         promises = (function() {
@@ -46,8 +46,8 @@
             return;
           }
           try {
-            if (typeof options.handleResult === "function") {
-              options.handleResult(value, index);
+            if (typeof handleResult === "function") {
+              handleResult(value, index);
             }
           } catch (_error) {
             error = _error;
@@ -55,9 +55,9 @@
             return cb(error);
           }
           numRemaining--;
-          if (numRemaining === 0 || (typeof options.stopEarly === "function" ? options.stopEarly() : void 0)) {
+          if (numRemaining === 0 || (typeof stopEarly === "function" ? stopEarly() : void 0)) {
             stopped = true;
-            return cb(null, typeof options.getFinalValue === "function" ? options.getFinalValue() : void 0);
+            return cb(null, typeof getFinalValue === "function" ? getFinalValue() : void 0);
           }
         };
       };
