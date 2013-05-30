@@ -1,6 +1,7 @@
 makePromise = require "make-promise"
 each = require "./each"
 eachSeries = require "./eachSeries"
+eachLimit = require "./eachLimit"
 
 module.exports = faithful =
   map: (values, iterator) ->
@@ -12,6 +13,12 @@ module.exports = faithful =
   mapSeries: (inputs, iterator) ->
     results = []
     eachSeries inputs, iterator,
+      handleResult: (result) -> results.push result
+      getFinalValue: -> results
+
+  mapLimit: (inputs, concurrency, iterator) ->
+    results = []
+    eachLimit inputs, concurrency, iterator,
       handleResult: (result) -> results.push result
       getFinalValue: -> results
 
