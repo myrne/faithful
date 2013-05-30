@@ -1,4 +1,4 @@
-{map,mapSeries} = require('./collections')
+{map,mapSeries,mapLimit} = require('./collections')
 
 module.exports =
   series: (functions) ->
@@ -6,6 +6,9 @@ module.exports =
 
   parallel: (functions) ->
     map functions, (fn) -> fn()
+  
+  parallelLimit: (functions, concurrency) ->
+    mapLimit functions, concurrency, (fn) -> fn()
   
   applyToEach: (functions, args...) ->
     map functions, (fn) -> fn.apply {}, args
