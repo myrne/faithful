@@ -50,7 +50,6 @@
       var timerId;
 
       timerId = delay(time, function() {
-        console.log("time out");
         return cb(new Error("Timeout after " + time + " ms."));
       });
       return promise.then(function(result) {

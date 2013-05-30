@@ -30,9 +30,7 @@ faithful.isPromise = (value) ->
 
 faithful.forceTimeout = (time, promise) ->
   makePromise (cb) ->
-    timerId = delay time, -> 
-      console.log "time out"
-      cb new Error "Timeout after #{time} ms."
+    timerId = delay time, -> cb new Error "Timeout after #{time} ms."
     promise
       .then (result) ->
         clearTimeout timerId
