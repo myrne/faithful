@@ -1,4 +1,4 @@
-# Faithful [![Build Status](https://travis-ci.org/meryn/faithful.png?branch=master)](https://travis-ci.org/meryn/faithful)
+# Faithful [![NPM version](https://badge.fury.io/js/faithful.png)](http://badge.fury.io/js/faithful) [![Dependency Status](https://david-dm.org/meryn/faithful.png)](https://david-dm.org/meryn/faithful) [![Build Status](https://travis-ci.org/meryn/faithful.png?branch=master)](https://travis-ci.org/meryn/faithful)
 
 Like [Async](https://github.com/caolan/async), but employing promises.
 
