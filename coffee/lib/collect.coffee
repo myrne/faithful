@@ -1,35 +1,31 @@
-{fulfill,fail,ensurePromise,isPromise} = require "./utilities"
-each = require "./each"
+{isPromise} = require "./utilities"
+makePromise = require "make-promise"
 
-module.exports = collect = (value) ->
-  switch getTypeOf value
-    when "object"
-      return value if typeof value.then is "function"
-      return collectProperties value
-    when "array"
-      return collectValues value
-    else
-      return fail new Error "You can only collect arrays or objects."
-      
-collectValues = (array) ->
-  results = []
-  each array, ensurePromise,
-    handleResult: (value, i) -> results[i] = value
-    getFinalValue: -> results
-
-collectProperties = (object) ->
-  promisesIndex = {}
-  newProperties = {}
-  for name, value of object
-    if isPromise value
-      promisesIndex[name] = value
-    else
-      newProperties[name] = value
-  promises = (value for name, value of promisesIndex)
-  promiseNames = Object.keys promisesIndex
-  each promises, ((p) -> p),
-    handleResult: (value, i) -> newProperties[promiseNames[i]] = value
-    getFinalValue: -> newProperties
+module.exports = collect = (inputs) ->
+  return inputs if isPromise inputs
+  return makePromise (cb) ->
+    switch getTypeOf inputs
+      when "object" then outputs = {}
+      when "array" then outputs = new Array inputs.length
+      else return cb new Error "You can only collect arrays or objects."
+    promises = []
+    indexes = []
+    for key, value of inputs
+      if isPromise value
+        promises.push value
+        indexes.push key
+      else
+        outputs[key] = value
+    return cb null, outputs unless promises.length > 0
+    numRemaining = promises.length
+    resolver = (i) ->
+      (result) -> 
+        outputs[indexes[i]] = result
+        numRemaining--
+        cb null, outputs unless numRemaining > 0
+    for promise, i in promises
+      try promise.then resolver(i), (err) -> cb err
+      catch err then return cb err
 
 getTypeOf = do ->
   classToType = {}
