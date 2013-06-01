@@ -2,16 +2,32 @@
 
 module.exports =
   series: (functions) ->
-    mapSeries functions, (fn) -> fn()
+    doBatch mapSeries, functions
 
   parallel: (functions) ->
-    map functions, (fn) -> fn()
+    doBatch map, functions
   
   parallelLimit: (functions, concurrency) ->
-    mapLimit functions, concurrency, (fn) -> fn()
+    makeMapFn = (concurrency) ->
+      (functions, iterator) -> mapLimit functions, concurrency, iterator
+    doBatch makeMapFn(concurrency), functions
   
   applyToEach: (functions, args...) ->
     map functions, (fn) -> fn.apply {}, args
 
   applyToEachSeries: (functions, args...) ->
     mapSeries functions, (fn) -> fn.apply {}, args
+
+doBatch = (map, functions) ->
+  if Array.isArray functions then doBatchArray map, functions else doBatchObject map, functions
+
+doBatchArray = (map, functions) ->
+  map functions, (fn) -> fn()
+
+doBatchObject = (map, obj) ->
+  keys = Object.keys obj
+  functions = (value for key, value of obj)
+  map(functions, (fn) -> fn()).then (results) ->
+    outputs = {}
+    outputs[keys[i]] = result for result, i in results
+    outputs
