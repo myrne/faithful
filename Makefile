@@ -1,6 +1,6 @@
 build:
 	mkdir -p lib
-	rm -rf lib/*
+	rm -rf js/*
 	node_modules/.bin/coffee --compile -m --output js/ coffee/
 
 watch:
