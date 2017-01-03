@@ -7,7 +7,7 @@ watch:
 	node_modules/.bin/coffee --watch --compile --output js/ coffee/
 	
 test:
-	node_modules/.bin/mocha js/test/*.js --compilers coffee:coffee-script --reporter spec
+	node_modules/.bin/mocha js/test/*.js --require coffee-script --compilers coffee:coffee-script/register --reporter spec
 
 jumpstart:
 	npm install
