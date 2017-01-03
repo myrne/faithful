@@ -40,7 +40,7 @@ module.exports = testAny = (subjectFn, it) ->
       .then ->
         next new Error "function should not have succeeded."
       .then null, (err) ->
-        assert.equal err.toString(), "TypeError: Object #<Object> has no method 'then'"
+        assert.equal err.toString(), "TypeError: promise.then is not a function"
         next null
       .then null, (err) ->
         next err
