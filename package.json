@@ -17,13 +17,13 @@
     "filterSeries"
   ],
   "version": "0.7.0",
-  "author": "Meryn Stol <merynstol@gmail.com>",
+  "author": "Braveg1rl <braveg1rl@outlook.com>",
   "license": "MIT",
-  "homepage": "https://github.com/meryn/faithful",
-  "bugs": "https://github.com/meryn/faithful/issues",
+  "homepage": "https://github.com/braveg1rl/faithful",
+  "bugs": "https://github.com/braveg1rl/faithful/issues",
   "repository": {
     "type": "git",
-    "url": "git://github.com/meryn/faithful.git"
+    "url": "git://github.com/braveg1rl/faithful.git"
   },
   "private": false,
   "dependencies": {

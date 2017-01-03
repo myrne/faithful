@@ -1,11 +1,11 @@
 {
   "name": "faithful",
-  "repo": "meryn/faithful",
+  "repo": "braveg1rl/faithful",
   "description": "Like Async, but employing promises.",
   "version": "0.6.0",
   "keywords": [],
   "dependencies": {
-    "meryn/make-promise": "*"
+    "braveg1rl/make-promise": "*"
   },
   "development": {
     "timoxley/assert": "*"
