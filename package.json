@@ -36,7 +36,7 @@
   },
   "optionalDependencies": {},
   "engines": {
-    "node": "6.x.x",
+    "node": "6.x.x"
   },
   "main": "js/lib/faithful.js",
   "scripts": {
