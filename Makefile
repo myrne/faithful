@@ -9,17 +9,4 @@ watch:
 test:
 	node_modules/.bin/mocha js/test/*.js --require coffee-script --compilers coffee:coffee-script/register --reporter spec
 
-jumpstart:
-	npm install
-	curl -u 'meryn' https://api.github.com/user/repos -d '{"name":"faithful", "description":"Like async, but employing promises.","private":false}'
-	mkdir -p src
-	touch src/faithful.coffee
-	mkdir -p test
-	touch test/faithful.coffee
-	git init
-	git remote add origin git@github.com:meryn/faithful
-	git add .
-	git commit -m "jumpstart commit."
-	git push -u origin master
-
 .PHONY: test build
