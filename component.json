@@ -2,7 +2,7 @@
   "name": "faithful",
   "repo": "braveg1rl/faithful",
   "description": "Like Async, but employing promises.",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "keywords": [],
   "dependencies": {
     "braveg1rl/make-promise": "*"
