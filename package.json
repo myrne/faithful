@@ -31,10 +31,8 @@
     "f-throttle": "~0.1.1"
   },
   "devDependencies": {
-    "mocha": "~1.9.0",
-    "setimmediate": "~1.0.1",
-    "promises-aplus-tests": "~1.3.1"
     "coffee-script": "^1.12.2",
+    "mocha": "1.x.x"
   },
   "optionalDependencies": {},
   "engines": {
