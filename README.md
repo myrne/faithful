@@ -1,5 +1,7 @@
 # Faithful [![NPM version](https://badge.fury.io/js/faithful.png)](http://badge.fury.io/js/faithful) [![Dependency Status](https://david-dm.org/braveg1rl/faithful.png)](https://david-dm.org/braveg1rl/faithful) [![Build Status](https://travis-ci.org/braveg1rl/faithful.png?branch=master)](https://travis-ci.org/braveg1rl/faithful)
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/braveg1rl/faithful.svg)](https://greenkeeper.io/)
+
 Like [Async](https://github.com/caolan/async), but employing promises.
 
 ### Collection functions
